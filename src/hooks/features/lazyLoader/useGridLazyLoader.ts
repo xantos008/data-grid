@@ -15,7 +15,7 @@ import { useGridVisibleRows, getRenderableIndexes } from '@mui/x-data-grid/inter
 import { GridPrivateApiExtra } from '../../../models/gridApiExtra';
 import {
   DataGridExtraProcessedProps,
-  GridExperimentalProFeatures,
+  GridExperimentalExtraFeatures,
 } from '../../../models/dataGridExtraProps';
 import { GridFetchRowsParams } from '../../../models/gridFetchRowsParams';
 
@@ -108,7 +108,7 @@ export const useGridLazyLoader = (
     firstRowToRender: 0,
     lastRowToRender: 0,
   });
-  const { lazyLoading } = (props.experimentalFeatures ?? {}) as GridExperimentalProFeatures;
+  const { lazyLoading } = (props.experimentalFeatures ?? {}) as GridExperimentalExtraFeatures;
 
   const getCurrentIntervalToRender = React.useCallback(() => {
     const currentRenderContext = privateApiRef.current.getRenderContext();

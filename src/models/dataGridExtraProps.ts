@@ -25,7 +25,7 @@ import {
 import { GridInitialStateExtra } from './gridStateExtra';
 import { GridExtraSlotsComponent, UncapitalizedGridExtraSlotsComponent } from './gridExtraSlotsComponent';
 
-export interface GridExperimentalProFeatures extends GridExperimentalFeatures {
+export interface GridExperimentalExtraFeatures extends GridExperimentalFeatures {
   /**
    * Enables the data grid to lazy load rows while scrolling.
    */
@@ -162,7 +162,7 @@ export interface DataGridExtraPropsWithoutDefaultValue<R extends GridValidRowMod
    * Unstable features, breaking changes might be introduced.
    * For each feature, if the flag is not explicitly set to `true`, the feature will be fully disabled and any property / method call will not have any effect.
    */
-  experimentalFeatures?: Partial<GridExperimentalProFeatures>;
+  experimentalFeatures?: Partial<GridExperimentalExtraFeatures>;
   /**
    * Determines the path of a row in the tree data.
    * For instance, a row with the path ["A", "B"] is the child of the row with the path ["A"].
