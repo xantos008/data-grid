@@ -1,0 +1,75 @@
+{
+  "name": "data-grid-extra",
+  "version": "1.0.0",
+  "description": "A react data table implementation using @mui.",
+  "author": "xantos008",
+  "main": "dist/index.js",
+  "module": "dist/index.es.js",
+  "jsnext:main": "dist/index.es.js",
+  "engines": {
+    "node": ">=8",
+    "npm": ">=5"
+  },
+  "license": "Unlicense",
+  "bugs": {
+    "url": "https://github.com/xantos008/data-grid-extra/issues"
+  },
+  "homepage": "https://github.com/xantos008/data-grid-extra",
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "react",
+    "react-component",
+    "material-ui",
+    "mui",
+    "react-table",
+    "table",
+    "datatable",
+    "data-table",
+    "datagrid",
+    "data-grid"
+  ],
+  "scripts": {
+    "compile": "tsc",
+    "clean": "rm -rf dist",
+    "build:simple": "npm run clean && rollup -c --bundleConfigAsCjs",
+    "build": "npm run clean && rollup -c --bundleConfigAsCjs && npm run postbuild",
+    "postbuild": "cp package.json dist && cp README.md dist && cp LICENSE dist",
+    "publish": "npm run build && npm run pack && npm publish data-grid-extra-1.0.0.tgz",
+    "pack": "npm pack ./dist/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xantos008/data-grid-extra.git"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.20.13",
+    "@emotion/styled": "^11.10.5",
+    "@mui/utils": "^5.11.7",
+    "@mui/x-data-grid": "6.0.0-beta.5",
+    "@types/format-util": "^1.0.2",
+    "clsx": "^1.2.1",
+    "prop-types": "^15.8.1",
+    "reselect": "^4.1.7"
+  },
+  "peerDependencies": {
+    "@mui/material": "^5.4.1",
+    "@mui/system": "^5.4.1",
+    "react": "^17.0.2 || ^18.0.0",
+    "react-dom": "^17.0.2 || ^18.0.0"
+  },
+  "devDependencies": {
+    "@babel/plugin-transform-runtime": "^7.19.6",
+    "@rollup/plugin-babel": "^6.0.3",
+    "@rollup/plugin-commonjs": "^24.0.0",
+    "@rollup/plugin-node-resolve": "^15.0.1",
+    "@rollup/plugin-url": "^8.0.1",
+    "@types/node": "^18.14.2",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-typescript2": "^0.34.1",
+    "tslib": "^2.4.1",
+    "typescript": "^4.9.4"
+  }
+}
