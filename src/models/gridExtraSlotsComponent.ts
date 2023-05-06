@@ -4,7 +4,7 @@ import { GridExtraIconSlotsComponent } from './gridExtraIconSlotsComponent';
 
 /**
  * Grid components React prop interface containing all the overridable components
- * for Pro package
+ * for Extra package
  */
 export interface GridExtraSlotsComponent extends GridSlotsComponent, GridExtraIconSlotsComponent {}
 

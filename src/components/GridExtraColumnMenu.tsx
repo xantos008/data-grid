@@ -8,12 +8,12 @@ import {
 } from '@mui/x-data-grid';
 import { GridColumnMenuPinningItem } from './GridColumnMenuPinningItem';
 
-export const GRID_COLUMN_MENU_SLOTS_PRO = {
+export const GRID_COLUMN_MENU_SLOTS_EXTRA = {
   ...GRID_COLUMN_MENU_SLOTS,
   columnMenuPinningItem: GridColumnMenuPinningItem,
 };
 
-export const GRID_COLUMN_MENU_SLOT_PROPS_PRO = {
+export const GRID_COLUMN_MENU_SLOT_PROPS_EXTRA = {
   ...GRID_COLUMN_MENU_SLOT_PROPS,
   columnMenuPinningItem: {
     displayOrder: 15,
@@ -26,8 +26,8 @@ const GridExtraColumnMenu = React.forwardRef<HTMLUListElement, GridColumnMenuPro
       <GridGenericColumnMenu
         ref={ref}
         {...props}
-        defaultSlots={GRID_COLUMN_MENU_SLOTS_PRO}
-        defaultSlotProps={GRID_COLUMN_MENU_SLOT_PROPS_PRO}
+        defaultSlots={GRID_COLUMN_MENU_SLOTS_EXTRA}
+        defaultSlotProps={GRID_COLUMN_MENU_SLOT_PROPS_EXTRA}
       />
     );
   },

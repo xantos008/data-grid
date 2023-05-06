@@ -22,10 +22,10 @@ import {
   GridGroupingColDefOverride,
   GridGroupingColDefOverrideParams,
 } from './gridGroupingColDefOverride';
-import { GridInitialStatePro } from './gridStateExtra';
+import { GridInitialStateExtra } from './gridStateExtra';
 import { GridExtraSlotsComponent, UncapitalizedGridProSlotsComponent } from './gridExtraSlotsComponent';
 
-export interface GridExperimentalProFeatures extends GridExperimentalFeatures {
+export interface GridExperimentalExtraFeatures extends GridExperimentalFeatures {
   /**
    * Enables the data grid to lazy load rows while scrolling.
    */
@@ -153,12 +153,12 @@ export interface DataGridExtraPropsWithoutDefaultValue<R extends GridValidRowMod
    * The data in it will be set in the state on initialization but will not be controlled.
    * If one of the data in `initialState` is also being controlled, then the control state wins.
    */
-  initialState?: GridInitialStatePro;
+  initialState?: GridInitialStateExtra;
   /**
    * Unstable features, breaking changes might be introduced.
    * For each feature, if the flag is not explicitly set to `true`, the feature will be fully disabled and any property / method call will not have any effect.
    */
-  experimentalFeatures?: Partial<GridExperimentalProFeatures>;
+  experimentalFeatures?: Partial<GridExperimentalExtraFeatures>;
   /**
    * Determines the path of a row in the tree data.
    * For instance, a row with the path ["A", "B"] is the child of the row with the path ["A"].

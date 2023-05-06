@@ -1,5 +1,5 @@
 import type { GridApiExtra } from '../models/gridApiExtra';
-import type { GridInitialStatePro, GridStateExtra } from '../models/gridStateExtra';
+import type { GridInitialStateExtra, GridStateExtra } from '../models/gridStateExtra';
 
 export { useGridApiContext } from '../hooks/utils/useGridApiContext';
 export { useGridApiRef } from '../hooks/utils/useGridApiRef';
@@ -18,4 +18,4 @@ export type GridState = GridStateExtra;
 /**
  * The initial state of `DataGridExtra`.
  */
-export type GridInitialState = GridInitialStatePro;
+export type GridInitialState = GridInitialStateExtra;

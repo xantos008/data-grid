@@ -5,7 +5,7 @@ import {
   GridRowProApi,
 } from '@mui/x-data-grid';
 import { GridPrivateOnlyApiCommon } from '@mui/x-data-grid/internals';
-import { GridInitialStatePro, GridStateExtra } from './gridStateExtra';
+import { GridInitialStateExtra, GridStateExtra } from './gridStateExtra';
 import type {
   GridColumnPinningApi,
   GridDetailPanelApi,
@@ -17,7 +17,7 @@ import type {
  * The api of `DataGridExtra`.
  */
 export interface GridApiExtra
-  extends GridApiCommon<GridStateExtra, GridInitialStatePro>,
+  extends GridApiCommon<GridStateExtra, GridInitialStateExtra>,
     GridRowProApi,
     GridColumnPinningApi,
     GridDetailPanelApi,

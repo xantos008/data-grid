@@ -11,7 +11,7 @@ import type {
 import type { GridCanBeReorderedPreProcessingContext } from '../hooks/features/columnReorder/columnReorderInterfaces';
 import { GridRowPinningInternalCache } from '../hooks/features/rowPinning/gridRowPinningInterface';
 
-export interface GridControlledStateEventLookupPro {
+export interface GridControlledStateEventLookupExtra {
   /**
    * Fired when the open detail panels are changed.
    * @ignore - do not document.
@@ -24,7 +24,7 @@ export interface GridControlledStateEventLookupPro {
   pinnedColumnsChange: { params: GridPinnedColumns };
 }
 
-export interface GridEventLookupPro {
+export interface GridEventLookupExtra {
   /**
    * Fired when scrolling to the bottom of the grid viewport.
    */
@@ -39,26 +39,26 @@ export interface GridEventLookupPro {
   fetchRows: { params: GridFetchRowsParams };
 }
 
-export interface GridPipeProcessingLookupPro {
+export interface GridPipeProcessingLookupExtra {
   canBeReordered: {
     value: boolean;
     context: GridCanBeReorderedPreProcessingContext;
   };
 }
 
-export interface GridApiCachesPro {
+export interface GridApiCachesExtra {
   columnPinning: GridColumnPinningInternalCache;
   pinnedRows: GridRowPinningInternalCache;
 }
 
 declare module '@mui/x-data-grid' {
-  interface GridEventLookup extends GridEventLookupPro {}
+  interface GridEventLookup extends GridEventLookupExtra {}
 
-  interface GridControlledStateEventLookup extends GridControlledStateEventLookupPro {}
+  interface GridControlledStateEventLookup extends GridControlledStateEventLookupExtra {}
 
-  interface GridPipeProcessingLookup extends GridPipeProcessingLookupPro {}
+  interface GridPipeProcessingLookup extends GridPipeProcessingLookupExtra {}
 }
 
 declare module '@mui/x-data-grid/internals' {
-  interface GridApiCaches extends GridApiCachesPro {}
+  interface GridApiCaches extends GridApiCachesExtra {}
 }
