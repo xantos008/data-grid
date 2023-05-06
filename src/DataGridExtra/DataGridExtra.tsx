@@ -14,10 +14,7 @@ import { useDataGridExtraComponent } from './useDataGridExtraComponent';
 import { DataGridExtraProps } from '../models/dataGridExtraProps';
 import { useDataGridExtraProps } from './useDataGridExtraProps';
 import { DataGridExtraVirtualScroller } from '../components/DataGridExtraVirtualScroller';
-import { getReleaseInfo } from '../utils/releaseInfo';
 import { gridPinnedColumnsSelector } from '../hooks/features/columnPinning/gridColumnPinningSelector';
-
-const releaseInfo = getReleaseInfo();
 
 const DataGridExtraRaw = React.forwardRef(function DataGridExtra<R extends GridValidRowModel>(
   inProps: DataGridExtraProps<R>,
