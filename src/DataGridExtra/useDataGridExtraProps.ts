@@ -11,7 +11,7 @@ import {
   DataGridExtraProcessedProps,
   DataGridExtraPropsWithDefaultValue,
 } from '../models/dataGridExtraProps';
-import { GridExtraSlotsComponent, UncapitalizedGridExtraSlotsComponent } from '../models';
+import { GridExtraSlotsComponent, UncapitalizedGridProSlotsComponent } from '../models';
 import { DATA_GRID_EXTRA_DEFAULT_SLOTS_COMPONENTS } from '../constants/dataGridExtraDefaultSlotsComponents';
 
 /**
@@ -44,7 +44,7 @@ export const useDataGridExtraProps = <R extends GridValidRowModel>(inProps: Data
     [themedProps.localeText],
   );
 
-  const slots = React.useMemo<UncapitalizedGridExtraSlotsComponent>(
+  const slots = React.useMemo<UncapitalizedGridProSlotsComponent>(
     () =>
       computeSlots<GridExtraSlotsComponent>({
         defaultSlots,

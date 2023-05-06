@@ -1,6 +1,6 @@
 # data-grid-extra
 
-This package is a full customized data grid component base on mui data grid library.
+This package is a full customized data grid component base on mui data grid library. Skip installation and read usage
 
 ## Installation
 
@@ -12,25 +12,7 @@ npm install data-grid-extra
 
 ## Usage
 
+This is an additional helper library for `DataGridUltra` please use
 ```sh
-import { DataGridExtra } from 'data-grid-extra';
-
-export default function DataGridUltraDemo() {
-  const { data } = useDemoData({
-    dataSet: 'Commodity',
-    rowLength: 100000,
-    editable: true,
-  });
-
-  return (
-      <DataGridExtra
-        {...data}
-        loading={data.rows.length === 0}
-        rowHeight={38}
-        checkboxSelection
-        disableSelectionOnClick
-        experimentalFeatures={{ newEditingApi: true }}
-      />
-  );
-}
+npm install data-grid-ultra
 ```

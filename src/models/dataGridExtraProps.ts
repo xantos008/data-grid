@@ -22,31 +22,27 @@ import {
   GridGroupingColDefOverride,
   GridGroupingColDefOverrideParams,
 } from './gridGroupingColDefOverride';
-import { GridInitialStateExtra } from './gridStateExtra';
-import { GridExtraSlotsComponent, UncapitalizedGridExtraSlotsComponent } from './gridExtraSlotsComponent';
+import { GridInitialStatePro } from './gridStateExtra';
+import { GridExtraSlotsComponent, UncapitalizedGridProSlotsComponent } from './gridExtraSlotsComponent';
 
-export interface GridExperimentalExtraFeatures extends GridExperimentalFeatures {
+export interface GridExperimentalProFeatures extends GridExperimentalFeatures {
   /**
    * Enables the data grid to lazy load rows while scrolling.
    */
   lazyLoading: boolean;
-  /**
-   * Enables the ability for rows to be pinned in data grid.
-   */
-  rowPinning: boolean;
 }
 
 interface DataGridExtraPropsWithComplexDefaultValueBeforeProcessing
   extends Omit<DataGridPropsWithComplexDefaultValueBeforeProcessing, 'components'> {
   /**
-   * Overrideable components.
+   * Overridable components.
    * @deprecated Use the `slots` prop instead.
    */
   components?: Partial<GridExtraSlotsComponent>;
   /**
-   * Overrideable components.
+   * Overridable components.
    */
-  slots?: Partial<UncapitalizedGridExtraSlotsComponent>;
+  slots?: Partial<UncapitalizedGridProSlotsComponent>;
 }
 
 /**
@@ -62,7 +58,7 @@ export interface DataGridExtraProps<R extends GridValidRowModel = any>
 
 interface DataGridExtraPropsWithComplexDefaultValueAfterProcessing
   extends Omit<DataGridPropsWithComplexDefaultValueAfterProcessing, 'slots'> {
-  slots: UncapitalizedGridExtraSlotsComponent;
+  slots: UncapitalizedGridProSlotsComponent;
 }
 
 /**
@@ -157,12 +153,12 @@ export interface DataGridExtraPropsWithoutDefaultValue<R extends GridValidRowMod
    * The data in it will be set in the state on initialization but will not be controlled.
    * If one of the data in `initialState` is also being controlled, then the control state wins.
    */
-  initialState?: GridInitialStateExtra;
+  initialState?: GridInitialStatePro;
   /**
    * Unstable features, breaking changes might be introduced.
    * For each feature, if the flag is not explicitly set to `true`, the feature will be fully disabled and any property / method call will not have any effect.
    */
-  experimentalFeatures?: Partial<GridExperimentalExtraFeatures>;
+  experimentalFeatures?: Partial<GridExperimentalProFeatures>;
   /**
    * Determines the path of a row in the tree data.
    * For instance, a row with the path ["A", "B"] is the child of the row with the path ["A"].

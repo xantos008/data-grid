@@ -19,7 +19,7 @@ import {
   GridStateInitializer,
 } from '@mui/x-data-grid/internals';
 import { GridPrivateApiExtra } from '../../../models/gridApiExtra';
-import { GridInitialStateExtra, GridStateExtra } from '../../../models/gridStateExtra';
+import { GridInitialStatePro, GridStateExtra } from '../../../models/gridStateExtra';
 import { DataGridExtraProcessedProps } from '../../../models/dataGridExtraProps';
 import {
   GridColumnPinningApi,
@@ -188,7 +188,7 @@ export const useGridColumnPinning = (
         return columnMenuItems;
       }
 
-      return [...columnMenuItems, 'ColumnMenuPinningItem'];
+      return [...columnMenuItems, 'columnMenuPinningItem'];
     },
     [props.disableColumnPinning],
   );
@@ -249,7 +249,7 @@ export const useGridColumnPinning = (
   );
 
   const stateRestorePreProcessing = React.useCallback<GridPipeProcessor<'restoreState'>>(
-    (params, context: GridRestoreStatePreProcessingContext<GridInitialStateExtra>) => {
+    (params, context: GridRestoreStatePreProcessingContext<GridInitialStatePro>) => {
       const newPinnedColumns = context.stateToRestore.pinnedColumns;
       if (newPinnedColumns != null) {
         apiRef.current.setState(mergeStateWithPinnedColumns(newPinnedColumns));

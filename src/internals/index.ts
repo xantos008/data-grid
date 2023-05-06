@@ -1,7 +1,7 @@
 export * from '@mui/x-data-grid/internals';
 
 export { DataGridExtraVirtualScroller } from '../components/DataGridExtraVirtualScroller';
-export { DataGridExtraColumnHeaders } from '../components/DataGridExtraColumnHeaders';
+export { GridColumnHeaders } from '../components/GridColumnHeaders';
 export { DATA_GRID_EXTRA_DEFAULT_SLOTS_COMPONENTS } from '../constants/dataGridExtraDefaultSlotsComponents';
 
 export {
@@ -40,7 +40,7 @@ export { useGridLazyLoader } from '../hooks/features/lazyLoader/useGridLazyLoade
 export { useGridLazyLoaderPreProcessors } from '../hooks/features/lazyLoader/useGridLazyLoaderPreProcessors';
 
 export type {
-  GridExperimentalExtraFeatures,
+  GridExperimentalProFeatures,
   DataGridExtraPropsWithoutDefaultValue,
   DataGridExtraPropsWithDefaultValue,
 } from '../models/dataGridExtraProps';

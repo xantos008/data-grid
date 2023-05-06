@@ -23,7 +23,7 @@ export interface GridStateExtra extends GridStateCommunity {
 /**
  * The initial state of `DataGridExtra`.
  */
-export interface GridInitialStateExtra extends GridInitialStateCommunity {
+export interface GridInitialStatePro extends GridInitialStateCommunity {
   pinnedColumns?: GridColumnPinningState;
   detailPanel?: GridDetailPanelInitialState;
 }

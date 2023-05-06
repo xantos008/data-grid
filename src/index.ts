@@ -20,13 +20,15 @@ export * from './models';
 export * from './components';
 export * from './utils';
 
-export type { DataGridExtraProps, GridExperimentalExtraFeatures } from './models/dataGridExtraProps';
+export type { DataGridExtraProps, GridExperimentalProFeatures } from './models/dataGridExtraProps';
 
 export { useGridApiContext, useGridApiRef, useGridRootProps } from './typeOverloads/reexports';
 export type { GridApi, GridInitialState, GridState } from './typeOverloads/reexports';
 
 export {
   GridColumnMenu,
-  GRID_COLUMN_MENU_COMPONENTS,
-  GRID_COLUMN_MENU_COMPONENTS_PROPS,
+  GRID_COLUMN_MENU_SLOTS,
+  GRID_COLUMN_MENU_SLOT_PROPS,
 } from './components/reexports';
+
+export { GridColumnHeaders } from './components/GridColumnHeaders';

@@ -9,6 +9,6 @@ import { GridExtraIconSlotsComponent } from './gridExtraIconSlotsComponent';
 export interface GridExtraSlotsComponent extends GridSlotsComponent, GridExtraIconSlotsComponent {}
 
 // TODO: remove in v7
-export interface UncapitalizedGridExtraSlotsComponent
+export interface UncapitalizedGridProSlotsComponent
   extends UncapitalizedGridSlotsComponent,
     UncapitalizeObjectKeys<GridExtraIconSlotsComponent> {}

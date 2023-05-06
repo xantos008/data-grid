@@ -8,12 +8,16 @@ import {
   GridRoot,
   GridContextProvider,
   GridValidRowModel,
+  useGridSelector,
 } from '@mui/x-data-grid';
 import { useDataGridExtraComponent } from './useDataGridExtraComponent';
 import { DataGridExtraProps } from '../models/dataGridExtraProps';
 import { useDataGridExtraProps } from './useDataGridExtraProps';
 import { DataGridExtraVirtualScroller } from '../components/DataGridExtraVirtualScroller';
-import { DataGridExtraColumnHeaders } from '../components/DataGridExtraColumnHeaders';
+import { getReleaseInfo } from '../utils/releaseInfo';
+import { gridPinnedColumnsSelector } from '../hooks/features/columnPinning/gridColumnPinningSelector';
+
+const releaseInfo = getReleaseInfo();
 
 const DataGridExtraRaw = React.forwardRef(function DataGridExtra<R extends GridValidRowModel>(
   inProps: DataGridExtraProps<R>,
@@ -22,13 +26,15 @@ const DataGridExtraRaw = React.forwardRef(function DataGridExtra<R extends GridV
   const props = useDataGridExtraProps(inProps);
   const privateApiRef = useDataGridExtraComponent(props.apiRef, props);
 
+  const pinnedColumns = useGridSelector(privateApiRef, gridPinnedColumnsSelector);
+
   return (
     <GridContextProvider privateApiRef={privateApiRef} props={props}>
       <GridRoot className={props.className} style={props.style} sx={props.sx} ref={ref}>
         <GridHeader />
         <GridBody
-          ColumnHeadersComponent={DataGridExtraColumnHeaders}
           VirtualScrollerComponent={DataGridExtraVirtualScroller}
+          ColumnHeadersProps={{ pinnedColumns }}
         />
         <GridFooterPlaceholder />
       </GridRoot>
@@ -126,12 +132,12 @@ DataGridExtraRaw.propTypes = {
    */
   columnVisibilityModel: PropTypes.object,
   /**
-   * Overrideable components.
+   * Overridable components.
    * @deprecated Use the `slots` prop instead.
    */
   components: PropTypes.object,
   /**
-   * Overrideable components props dynamically passed to the component at rendering.
+   * Overridable components props dynamically passed to the component at rendering.
    * @deprecated Use the `slotProps` prop instead.
    */
   componentsProps: PropTypes.object,
@@ -234,7 +240,6 @@ DataGridExtraRaw.propTypes = {
   experimentalFeatures: PropTypes.shape({
     columnGrouping: PropTypes.bool,
     lazyLoading: PropTypes.bool,
-    rowPinning: PropTypes.bool,
     warnIfFocusStateIsNotSynced: PropTypes.bool,
   }),
   /**
@@ -457,7 +462,7 @@ DataGridExtraRaw.propTypes = {
   onCellKeyDown: PropTypes.func,
   /**
    * Callback fired when the `cellModesModel` prop changes.
-   * @param {GridCellModesModel} cellModesModel Object containig which cells are in "edit" mode.
+   * @param {GridCellModesModel} cellModesModel Object containing which cells are in "edit" mode.
    * @param {GridCallbackDetails} details Additional details for this callback.
    */
   onCellModesModelChange: PropTypes.func,
@@ -636,7 +641,7 @@ DataGridExtraRaw.propTypes = {
   onRowEditStop: PropTypes.func,
   /**
    * Callback fired when the `rowModesModel` prop changes.
-   * @param {GridRowModesModel} rowModesModel Object containig which rows are in "edit" mode.
+   * @param {GridRowModesModel} rowModesModel Object containing which rows are in "edit" mode.
    * @param {GridCallbackDetails} details Additional details for this callback.
    */
   onRowModesModelChange: PropTypes.func,
@@ -798,11 +803,11 @@ DataGridExtraRaw.propTypes = {
    */
   showColumnVerticalBorder: PropTypes.bool,
   /**
-   * Overrideable components props dynamically passed to the component at rendering.
+   * Overridable components props dynamically passed to the component at rendering.
    */
   slotProps: PropTypes.object,
   /**
-   * Overrideable components.
+   * Overridable components.
    */
   slots: PropTypes.object,
   /**

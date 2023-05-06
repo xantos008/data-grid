@@ -1,8 +1,11 @@
 {
   "name": "data-grid-extra",
-  "version": "1.1.0",
+  "version": "3.1.2",
   "description": "A react data table implementation using @mui.",
   "author": "xantos008",
+  "files": [
+    "dist/*"
+  ],
   "main": "dist/index.js",
   "module": "dist/index.es.js",
   "jsnext:main": "dist/index.es.js",
@@ -32,12 +35,12 @@
     "data-grid"
   ],
   "scripts": {
-    "compile": "tsc",
+    "compile": "rm -rf build && tsc && cp package.json build && cp README.md build && cp LICENSE build",
     "clean": "rm -rf dist",
     "build:simple": "npm run clean && rollup -c --bundleConfigAsCjs",
     "build": "npm run clean && rollup -c --bundleConfigAsCjs && npm run postbuild",
     "postbuild": "cp package.json dist && cp README.md dist && cp LICENSE dist",
-    "publish": "npm run build && npm run pack && npm publish data-grid-extra-1.0.0.tgz",
+    "publish": "npm run build && npm run pack && npm publish data-grid-extra-3.1.2.tgz",
     "pack": "npm pack ./dist/"
   },
   "repository": {
@@ -45,14 +48,14 @@
     "url": "https://github.com/xantos008/data-grid-extra.git"
   },
   "dependencies": {
-    "@babel/runtime": "^7.20.13",
+    "@babel/runtime": "^7.21.0",
     "@emotion/styled": "^11.10.5",
-    "@mui/utils": "^5.11.7",
-    "@mui/x-data-grid": "6.0.0-beta.5",
+    "@mui/utils": "^5.12.3",
+    "@mui/x-data-grid": "^6.3.1",
     "@types/format-util": "^1.0.2",
     "clsx": "^1.2.1",
     "prop-types": "^15.8.1",
-    "reselect": "^4.1.7"
+    "reselect": "^4.1.8"
   },
   "peerDependencies": {
     "@mui/material": "^5.4.1",
@@ -71,5 +74,8 @@
     "rollup-plugin-typescript2": "^0.34.1",
     "tslib": "^2.4.1",
     "typescript": "^4.9.4"
+  },
+  "resolutions": {
+    "csstype": "3.0.10"
   }
 }
