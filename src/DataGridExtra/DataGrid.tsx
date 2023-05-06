@@ -18,7 +18,7 @@ export function DataGrid() {
 /**
  * @deprecated Import DataGridExtra instead.
  */
-export function DataGridPremium() {
+export function DataGridUltra() {
   if (process.env.NODE_ENV === 'production') {
     return null;
   }
