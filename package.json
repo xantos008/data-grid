@@ -1,6 +1,6 @@
 {
   "name": "data-grid-extra",
-  "version": "3.1.4",
+  "version": "3.1.5",
   "description": "A react data table implementation using @mui.",
   "author": "xantos008",
   "files": [
@@ -40,8 +40,8 @@
     "build:simple": "npm run clean && rollup -c --bundleConfigAsCjs",
     "build": "npm run clean && rollup -c --bundleConfigAsCjs && npm run postbuild",
     "postbuild": "cp package.json dist && cp README.md dist && cp LICENSE dist && node ./scripts/runUpdatePackageJson.js",
-    "publish": "npm run build && npm run pack && npm publish data-grid-extra-3.1.4.tgz",
-    "pack": "npm pack ./dist/"
+    "publish": "npm run compile && npm run build && npm run pack && npm publish data-grid-extra-3.1.5.tgz",
+    "pack": "npm pack ./build/"
   },
   "repository": {
     "type": "git",
