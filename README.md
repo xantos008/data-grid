@@ -2,6 +2,8 @@
 
 This package is a full customized data grid component base on mui data grid library. Skip installation and read usage
 
+[![Buy me a coffee](https://img.buymeacoffee.com/button-api/?url=https%3A%2F%2Fwww.buymeacoffee.com%2Fxantos008&text=Buy%20me%20a%20coffee&emoji=&slug=xantos008&button_colour=FFDD00&font_colour=000000&font_family=Lato&outline_colour=000000&coffee_colour=ffffff)](https://www.buymeacoffee.com/xantos008)
+
 ## Installation
 
 Install the package in your project directory with:
@@ -379,3 +381,5 @@ The `ref` is forwarded to the root element.
 | pinnedRows--top | .MuiDataGrid-pinnedRows--top | Styles applied to the top pinned rows container. |
 | pinnedRows--bottom | .MuiDataGrid-pinnedRows--bottom | Styles applied to the bottom pinned rows container. |
 | pinnedRowsRenderZone | .MuiDataGrid-pinnedRowsRenderZone | Styles applied to pinned rows render zones. |
+
+[![Buy me a coffee](https://img.buymeacoffee.com/button-api/?url=https%3A%2F%2Fwww.buymeacoffee.com%2Fxantos008&text=Buy%20me%20a%20coffee&emoji=&slug=xantos008&button_colour=FFDD00&font_colour=000000&font_family=Lato&outline_colour=000000&coffee_colour=ffffff)](https://www.buymeacoffee.com/xantos008)
