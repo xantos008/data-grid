@@ -92,8 +92,13 @@ export const useGridColumnPinning = (
         return;
       }
 
+      const rowContainer = apiRef.current.virtualScrollerRef!.current!;
+      if (!rowContainer) {
+        return;
+      }
+
       const index = event.currentTarget.dataset.rowindex;
-      const rowElements = apiRef.current.virtualScrollerRef!.current!.querySelectorAll(
+      const rowElements = rowContainer.querySelectorAll(
         `.${gridClasses.row}[data-rowindex="${index}"]`,
       );
       rowElements.forEach((row) => {
@@ -278,7 +283,7 @@ export const useGridColumnPinning = (
     (methodName: keyof GridColumnPinningApi) => {
       if (props.disableColumnPinning) {
         throw new Error(
-          `MUI: You cannot call \`apiRef.current.${methodName}\` when \`disableColumnPinning\` is true.`,
+          `DataGridExtra: You cannot call \`apiRef.current.${methodName}\` when \`disableColumnPinning\` is true.`,
         );
       }
     },

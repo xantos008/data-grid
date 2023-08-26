@@ -21,7 +21,7 @@ export const GRID_COLUMN_MENU_SLOT_PROPS_EXTRA = {
 };
 
 const GridExtraColumnMenu = React.forwardRef<HTMLUListElement, GridColumnMenuProps>(
-  function GridProColumnMenu(props, ref) {
+  function GridExtraColumnMenu(props, ref) {
     return (
       <GridGenericColumnMenu
         ref={ref}

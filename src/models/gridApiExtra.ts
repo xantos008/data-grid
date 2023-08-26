@@ -22,7 +22,6 @@ export interface GridApiExtra
     GridColumnPinningApi,
     GridDetailPanelApi,
     GridRowPinningApi,
-    // APIs that are
     GridRowMultiSelectionApi,
     GridColumnReorderApi,
     GridRowProApi {}

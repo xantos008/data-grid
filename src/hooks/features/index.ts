@@ -1,4 +1,4 @@
-// Only export the variable and types that should be publicly exposed and re-exported from `xantos008/data-grid-extra`
+// Only export the variable and types that should be publicly exposed and re-exported from `data-grid-extra`
 export * from './columnPinning';
 export * from './columnReorder';
 export * from './columnResize';

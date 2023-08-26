@@ -1,6 +1,6 @@
 import { gridClasses } from '@mui/x-data-grid';
 import { findParentElementFromClassName } from '@mui/x-data-grid/internals';
-import { GridApiExtra } from '../models/gridApiExtra';
+import { GridPrivateApiExtra } from '../models/gridApiExtra';
 
 export function getFieldFromHeaderElem(colCellEl: Element): string {
   return colCellEl.getAttribute('data-field')!;
@@ -14,10 +14,10 @@ export function findGroupHeaderElementsFromField(elem: Element, field: string): 
   return Array.from(elem.querySelectorAll<HTMLDivElement>(`[data-fields*="|-${field}-|"]`) ?? []);
 }
 
-export function findGridCellElementsFromCol(col: HTMLElement, api: GridApiExtra) {
+export function findGridCellElementsFromCol(col: HTMLElement, api: GridPrivateApiExtra) {
   const root = findParentElementFromClassName(col, gridClasses.root);
   if (!root) {
-    throw new Error('MUI: The root element is not found.');
+    throw new Error('DataGridExtra: The root element is not found.');
   }
 
   const ariaColIndex = col.getAttribute('aria-colindex');
@@ -28,7 +28,14 @@ export function findGridCellElementsFromCol(col: HTMLElement, api: GridApiExtra)
   const colIndex = Number(ariaColIndex) - 1;
   const cells: Element[] = [];
 
-  const renderedRowElements = root.querySelectorAll(`.${gridClasses.row}`);
+  const virtualScrollerContent = api.virtualScrollerRef?.current?.firstElementChild;
+  if (!virtualScrollerContent) {
+    return [];
+  }
+
+  const renderedRowElements = virtualScrollerContent.querySelectorAll(
+    `:scope > div > .${gridClasses.row}`, // Use > to ignore rows from detail panels
+  );
 
   renderedRowElements.forEach((rowElement) => {
     const rowId = rowElement.getAttribute('data-id');

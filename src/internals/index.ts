@@ -1,9 +1,12 @@
+// eslint-disable-next-line import/export
 export * from '@mui/x-data-grid/internals';
 
 export { DataGridExtraVirtualScroller } from '../components/DataGridExtraVirtualScroller';
 export { GridColumnHeaders } from '../components/GridColumnHeaders';
 export { DATA_GRID_EXTRA_DEFAULT_SLOTS_COMPONENTS } from '../constants/dataGridExtraDefaultSlotsComponents';
 
+// eslint-disable-next-line import/export
+export { useGridColumnHeaders } from '../hooks/features/columnHeaders/useGridColumnHeaders';
 export {
   useGridColumnResize,
   columnResizeStateInitializer,
@@ -40,7 +43,7 @@ export { useGridLazyLoader } from '../hooks/features/lazyLoader/useGridLazyLoade
 export { useGridLazyLoaderPreProcessors } from '../hooks/features/lazyLoader/useGridLazyLoaderPreProcessors';
 
 export type {
-  GridExperimentalExtraFeatures,
+  GridExperimentalProFeatures,
   DataGridExtraPropsWithoutDefaultValue,
   DataGridExtraPropsWithDefaultValue,
 } from '../models/dataGridExtraProps';
@@ -48,5 +51,5 @@ export type {
 export { createRowTree } from '../utils/tree/createRowTree';
 export { updateRowTree } from '../utils/tree/updateRowTree';
 export { sortRowTree } from '../utils/tree/sortRowTree';
-export { insertNodeInTree, removeNodeFromTree } from '../utils/tree/utils';
+export { insertNodeInTree, removeNodeFromTree, getVisibleRowsLookup } from '../utils/tree/utils';
 export type { RowTreeBuilderGroupingCriterion } from '../utils/tree/models';

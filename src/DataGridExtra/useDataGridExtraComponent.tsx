@@ -40,6 +40,8 @@ import {
   rowSelectionStateInitializer,
   useGridColumnGrouping,
   columnGroupsStateInitializer,
+  headerFilteringStateInitializer,
+  useGridHeaderFiltering,
 } from '@mui/x-data-grid/internals';
 import { GridApiExtra, GridPrivateApiExtra } from '../models/gridApiExtra';
 import { DataGridExtraProcessedProps } from '../models/dataGridExtraProps';
@@ -98,6 +100,7 @@ export const useDataGridExtraComponent = (
   /**
    * Register all state initializers here.
    */
+  useGridInitializeState(headerFilteringStateInitializer, apiRef, props);
   useGridInitializeState(rowSelectionStateInitializer, apiRef, props);
   useGridInitializeState(detailPanelStateInitializer, apiRef, props);
   useGridInitializeState(columnPinningStateInitializer, apiRef, props);
@@ -117,6 +120,7 @@ export const useDataGridExtraComponent = (
   useGridInitializeState(columnMenuStateInitializer, apiRef, props);
   useGridInitializeState(columnGroupsStateInitializer, apiRef, props);
 
+  useGridHeaderFiltering(apiRef, props);
   useGridTreeData(apiRef);
   useGridKeyboardNavigation(apiRef, props);
   useGridRowSelection(apiRef, props);
@@ -124,7 +128,7 @@ export const useDataGridExtraComponent = (
   useGridRowPinning(apiRef, props);
   useGridColumns(apiRef, props);
   useGridRows(apiRef, props);
-  useGridParamsApi(apiRef);
+  useGridParamsApi(apiRef, props);
   useGridDetailPanel(apiRef, props);
   useGridColumnSpanning(apiRef);
   useGridColumnGrouping(apiRef, props);
@@ -143,9 +147,9 @@ export const useDataGridExtraComponent = (
   useGridInfiniteLoader(apiRef, props);
   useGridLazyLoader(apiRef, props);
   useGridColumnMenu(apiRef);
-  useGridCsvExport(apiRef);
+  useGridCsvExport(apiRef, props);
   useGridPrintExport(apiRef, props);
-  useGridClipboard(apiRef);
+  useGridClipboard(apiRef, props);
   useGridDimensions(apiRef, props);
   useGridEvents(apiRef, props);
   useGridStatePersistence(apiRef);

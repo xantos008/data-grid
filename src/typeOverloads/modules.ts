@@ -4,6 +4,7 @@ import type {
   GridRowOrderChangeParams,
   GridFetchRowsParams,
 } from '../models';
+import type { GridHeaderFilterCellProps } from '../components/headerFiltering/GridHeaderFilterCell';
 import type {
   GridColumnPinningInternalCache,
   GridPinnedColumns,
@@ -11,7 +12,16 @@ import type {
 import type { GridCanBeReorderedPreProcessingContext } from '../hooks/features/columnReorder/columnReorderInterfaces';
 import { GridRowPinningInternalCache } from '../hooks/features/rowPinning/gridRowPinningInterface';
 
-export interface GridControlledStateEventLookupExtra {
+export interface GridColDefPro {
+  /**
+   * Allows to render a component in the column header filter cell.
+   * @param {GridHeaderFilterCellProps} params Object containing parameters for the renderer.
+   * @returns {React.ReactNode} The element to be rendered.
+   */
+  renderHeaderFilter?: (params: GridHeaderFilterCellProps) => React.ReactNode;
+}
+
+export interface GridControlledStateEventLookupPro {
   /**
    * Fired when the open detail panels are changed.
    * @ignore - do not document.
@@ -24,7 +34,7 @@ export interface GridControlledStateEventLookupExtra {
   pinnedColumnsChange: { params: GridPinnedColumns };
 }
 
-export interface GridEventLookupExtra {
+export interface GridEventLookupPro {
   /**
    * Fired when scrolling to the bottom of the grid viewport.
    */
@@ -39,26 +49,28 @@ export interface GridEventLookupExtra {
   fetchRows: { params: GridFetchRowsParams };
 }
 
-export interface GridPipeProcessingLookupExtra {
+export interface GridPipeProcessingLookupPro {
   canBeReordered: {
     value: boolean;
     context: GridCanBeReorderedPreProcessingContext;
   };
 }
 
-export interface GridApiCachesExtra {
+export interface GridApiCachesPro {
   columnPinning: GridColumnPinningInternalCache;
   pinnedRows: GridRowPinningInternalCache;
 }
 
 declare module '@mui/x-data-grid' {
-  interface GridEventLookup extends GridEventLookupExtra {}
+  interface GridEventLookup extends GridEventLookupPro {}
 
-  interface GridControlledStateEventLookup extends GridControlledStateEventLookupExtra {}
+  interface GridControlledStateEventLookup extends GridControlledStateEventLookupPro {}
 
-  interface GridPipeProcessingLookup extends GridPipeProcessingLookupExtra {}
+  interface GridPipeProcessingLookup extends GridPipeProcessingLookupPro {}
 }
 
 declare module '@mui/x-data-grid/internals' {
-  interface GridApiCaches extends GridApiCachesExtra {}
+  interface GridApiCaches extends GridApiCachesPro {}
+
+  interface GridBaseColDef extends GridColDefPro {}
 }

@@ -23,9 +23,10 @@ import {
   GridGroupingColDefOverrideParams,
 } from './gridGroupingColDefOverride';
 import { GridInitialStateExtra } from './gridStateExtra';
-import { GridExtraSlotsComponent, UncapitalizedGridProSlotsComponent } from './gridExtraSlotsComponent';
+import { GridExtraSlotsComponent, UncapitalizedGridExtraSlotsComponent } from './gridExtraSlotsComponent';
+import type { GridProSlotProps } from './gridProSlotProps';
 
-export interface GridExperimentalExtraFeatures extends GridExperimentalFeatures {
+export interface GridExperimentalProFeatures extends GridExperimentalFeatures {
   /**
    * Enables the data grid to lazy load rows while scrolling.
    */
@@ -42,7 +43,7 @@ interface DataGridExtraPropsWithComplexDefaultValueBeforeProcessing
   /**
    * Overridable components.
    */
-  slots?: Partial<UncapitalizedGridProSlotsComponent>;
+  slots?: Partial<UncapitalizedGridExtraSlotsComponent>;
 }
 
 /**
@@ -58,7 +59,7 @@ export interface DataGridExtraProps<R extends GridValidRowModel = any>
 
 interface DataGridExtraPropsWithComplexDefaultValueAfterProcessing
   extends Omit<DataGridPropsWithComplexDefaultValueAfterProcessing, 'slots'> {
-  slots: UncapitalizedGridProSlotsComponent;
+  slots: UncapitalizedGridExtraSlotsComponent;
 }
 
 /**
@@ -140,10 +141,18 @@ export interface DataGridExtraPropsWithDefaultValue extends DataGridPropsWithDef
    * @default false
    */
   keepColumnPositionIfDraggedOutside: boolean;
+  /**
+   * If `true`, enables the data grid filtering on header feature.
+   * @default false
+   */
+  unstable_headerFilters: boolean;
 }
 
 export interface DataGridExtraPropsWithoutDefaultValue<R extends GridValidRowModel = any>
-  extends Omit<DataGridPropsWithoutDefaultValue<R>, 'initialState'> {
+  extends Omit<
+    DataGridPropsWithoutDefaultValue<R>,
+    'initialState' | 'componentsProps' | 'slotProps'
+  > {
   /**
    * The ref object that allows grid manipulation. Can be instantiated with `useGridApiRef()`.
    */
@@ -158,7 +167,7 @@ export interface DataGridExtraPropsWithoutDefaultValue<R extends GridValidRowMod
    * Unstable features, breaking changes might be introduced.
    * For each feature, if the flag is not explicitly set to `true`, the feature will be fully disabled and any property / method call will not have any effect.
    */
-  experimentalFeatures?: Partial<GridExperimentalExtraFeatures>;
+  experimentalFeatures?: Partial<GridExperimentalProFeatures>;
   /**
    * Determines the path of a row in the tree data.
    * For instance, a row with the path ["A", "B"] is the child of the row with the path ["A"].
@@ -220,7 +229,7 @@ export interface DataGridExtraPropsWithoutDefaultValue<R extends GridValidRowMod
   /**
    * Function that returns the element to render in row detail.
    * @param {GridRowParams} params With all properties from [[GridRowParams]].
-   * @returns {JSX.Element} The row detail element.
+   * @returns {React.JSX.Element} The row detail element.
    */
   getDetailPanelContent?: (params: GridRowParams<R>) => React.ReactNode;
   /**
@@ -241,4 +250,13 @@ export interface DataGridExtraPropsWithoutDefaultValue<R extends GridValidRowMod
    * Rows data to pin on top or bottom.
    */
   pinnedRows?: GridPinnedRowsProp<R>;
+  /**
+   * Overridable components props dynamically passed to the component at rendering.
+   */
+  slotProps?: GridProSlotProps;
+  /**
+   * Overridable components props dynamically passed to the component at rendering.
+   * @deprecated Use the `slotProps` prop instead.
+   */
+  componentsProps?: GridProSlotProps;
 }

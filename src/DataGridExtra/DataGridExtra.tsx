@@ -27,7 +27,13 @@ const DataGridExtraRaw = React.forwardRef(function DataGridExtra<R extends GridV
 
   return (
     <GridContextProvider privateApiRef={privateApiRef} props={props}>
-      <GridRoot className={props.className} style={props.style} sx={props.sx} ref={ref}>
+      <GridRoot
+        className={props.className}
+        style={props.style}
+        sx={props.sx}
+        ref={ref}
+        {...props.forwardedProps}
+      >
         <GridHeader />
         <GridBody
           VirtualScrollerComponent={DataGridExtraVirtualScroller}
@@ -42,7 +48,7 @@ const DataGridExtraRaw = React.forwardRef(function DataGridExtra<R extends GridV
 interface DataGridExtraComponent {
   <R extends GridValidRowModel = any>(
     props: DataGridExtraProps<R> & React.RefAttributes<HTMLDivElement>,
-  ): JSX.Element;
+  ): React.JSX.Element;
   propTypes?: any;
 }
 
@@ -94,7 +100,7 @@ DataGridExtraRaw.propTypes = {
   checkboxSelectionVisibleOnly: chainPropTypes(PropTypes.bool, (props: any) => {
     if (!props.pagination && props.checkboxSelectionVisibleOnly) {
       return new Error(
-        'MUI: The `checkboxSelectionVisibleOnly` prop has no effect when the pagination is not enabled.',
+        'DataGridExtra: The `checkboxSelectionVisibleOnly` prop has no effect when the pagination is not enabled.',
       );
     }
     return null;
@@ -103,6 +109,11 @@ DataGridExtraRaw.propTypes = {
    * Override or extend the styles applied to the component.
    */
   classes: PropTypes.object,
+  /**
+   * The character used to separate cell values when copying to the clipboard.
+   * @default '\t'
+   */
+  clipboardCopyCellDelimiter: PropTypes.string,
   /**
    * Number of extra columns to be rendered before/after the visible slice.
    * @default 3
@@ -201,6 +212,12 @@ DataGridExtraRaw.propTypes = {
    */
   disableDensitySelector: PropTypes.bool,
   /**
+   * If `true`, `eval()` is not used for performance optimization.
+   * @default false
+   * @ignore - do not document
+   */
+  disableEval: PropTypes.bool,
+  /**
    * If `true`, filtering with multiple columns is disabled.
    * @default false
    */
@@ -235,10 +252,16 @@ DataGridExtraRaw.propTypes = {
    * For each feature, if the flag is not explicitly set to `true`, the feature will be fully disabled and any property / method call will not have any effect.
    */
   experimentalFeatures: PropTypes.shape({
+    ariaV7: PropTypes.bool,
     columnGrouping: PropTypes.bool,
     lazyLoading: PropTypes.bool,
     warnIfFocusStateIsNotSynced: PropTypes.bool,
   }),
+  /**
+   * The milliseconds delay to wait after a keystroke before triggering filtering.
+   * @default 150
+   */
+  filterDebounceMs: PropTypes.number,
   /**
    * Filtering can be processed on the server or client-side.
    * Set it to 'server' if you would like to handle filtering on the server-side.
@@ -247,7 +270,7 @@ DataGridExtraRaw.propTypes = {
   filterMode: chainPropTypes(PropTypes.oneOf(['client', 'server']), (props: any) => {
     if (props.treeData && props.filterMode === 'server') {
       return new Error(
-        'MUI: The `filterMode="server"` prop is not available when the `treeData` is enabled.',
+        'DataGridExtra: The `filterMode="server"` prop is not available when the `treeData` is enabled.',
       );
     }
     return null;
@@ -265,9 +288,15 @@ DataGridExtraRaw.propTypes = {
       }),
     ).isRequired,
     logicOperator: PropTypes.oneOf(['and', 'or']),
+    quickFilterExcludeHiddenColumns: PropTypes.bool,
     quickFilterLogicOperator: PropTypes.oneOf(['and', 'or']),
     quickFilterValues: PropTypes.array,
   }),
+  /**
+   * Forwarded props for the grid root element.
+   * @ignore - do not document.
+   */
+  forwardedProps: PropTypes.object,
   /**
    * Function that applies CSS classes dynamically on cells.
    * @param {GridCellParams} params With all properties from [[GridCellParams]].
@@ -277,7 +306,7 @@ DataGridExtraRaw.propTypes = {
   /**
    * Function that returns the element to render in row detail.
    * @param {GridRowParams} params With all properties from [[GridRowParams]].
-   * @returns {JSX.Element} The row detail element.
+   * @returns {React.JSX.Element} The row detail element.
    */
   getDetailPanelContent: PropTypes.func,
   /**
@@ -348,7 +377,7 @@ DataGridExtraRaw.propTypes = {
   hideFooterRowCount: chainPropTypes(PropTypes.bool, (props: any) => {
     if (props.pagination && props.hideFooterRowCount) {
       return new Error(
-        'MUI: The `hideFooterRowCount` prop has no effect when the pagination is enabled.',
+        'DataGridExtra: The `hideFooterRowCount` prop has no effect when the pagination is enabled.',
       );
     }
     return null;
@@ -463,6 +492,11 @@ DataGridExtraRaw.propTypes = {
    * @param {GridCallbackDetails} details Additional details for this callback.
    */
   onCellModesModelChange: PropTypes.func,
+  /**
+   * Callback called when the data is copied to the clipboard.
+   * @param {string} data The data copied to the clipboard.
+   */
+  onClipboardCopy: PropTypes.func,
   /**
    * Callback fired when a click event comes from a column header element.
    * @param {GridColumnHeaderParams} params With all properties from [[GridColumnHeaderParams]].
@@ -680,7 +714,15 @@ DataGridExtraRaw.propTypes = {
    * Select the pageSize dynamically using the component UI.
    * @default [25, 50, 100]
    */
-  pageSizeOptions: PropTypes.arrayOf(PropTypes.number),
+  pageSizeOptions: PropTypes.arrayOf(
+    PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.shape({
+        label: PropTypes.string.isRequired,
+        value: PropTypes.number.isRequired,
+      }),
+    ]).isRequired,
+  ),
   /**
    * If `true`, pagination is enabled.
    * @default false
@@ -847,4 +889,21 @@ DataGridExtraRaw.propTypes = {
    * @default false
    */
   treeData: PropTypes.bool,
+  /**
+   * If `true`, enables the data grid filtering on header feature.
+   * @default false
+   */
+  unstable_headerFilters: PropTypes.bool,
+  /**
+   * If `true`, the grid will not use `valueFormatter` when exporting to CSV or copying to clipboard.
+   * If an object is provided, you can choose to ignore the `valueFormatter` for CSV export or clipboard export.
+   * @default: false
+   */
+  unstable_ignoreValueFormatterDuringExport: PropTypes.oneOfType([
+    PropTypes.shape({
+      clipboardExport: PropTypes.bool,
+      csvExport: PropTypes.bool,
+    }),
+    PropTypes.bool,
+  ]),
 } as any;
