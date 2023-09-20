@@ -45,7 +45,7 @@ import {
 } from '@mui/x-data-grid/internals';
 import { GridApiExtra, GridPrivateApiExtra } from '../models/gridApiExtra';
 import { DataGridExtraProcessedProps } from '../models/dataGridExtraProps';
-// Pro-only features
+// Extra-only features
 import { useGridInfiniteLoader } from '../hooks/features/infiniteLoader/useGridInfiniteLoader';
 import {
   useGridColumnReorder,

@@ -4,7 +4,7 @@ import { GRID_ROOT_GROUP_ID, GridGroupNode, GridSkeletonRowNode } from '@mui/x-d
 import { GridPrivateApiExtra } from '../../../models/gridApiExtra';
 import {
   DataGridExtraProcessedProps,
-  GridExperimentalProFeatures,
+  GridExperimentalExtraFeatures,
 } from '../../../models/dataGridExtraProps';
 
 export const GRID_SKELETON_ROW_ROOT_ID = 'auto-generated-skeleton-row-root';
@@ -15,7 +15,7 @@ export const useGridLazyLoaderPreProcessors = (
   privateApiRef: React.MutableRefObject<GridPrivateApiExtra>,
   props: Pick<DataGridExtraProcessedProps, 'rowCount' | 'rowsLoadingMode' | 'experimentalFeatures'>,
 ) => {
-  const { lazyLoading } = (props.experimentalFeatures ?? {}) as GridExperimentalProFeatures;
+  const { lazyLoading } = (props.experimentalFeatures ?? {}) as GridExperimentalExtraFeatures;
 
   const addSkeletonRows = React.useCallback<GridPipeProcessor<'hydrateRows'>>(
     (groupingParams) => {

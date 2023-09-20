@@ -6,6 +6,6 @@ export interface HeaderFilterCellPropsOverrides {}
 
 type SlotProps<Props, Overrides> = Partial<Props & Overrides>;
 
-export interface GridProSlotProps extends GridSlotsComponentsProps {
+export interface GridExtraSlotProps extends GridSlotsComponentsProps {
   headerFilterCell?: SlotProps<GridHeaderFilterCellProps, HeaderFilterCellPropsOverrides>;
 }

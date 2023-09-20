@@ -170,8 +170,8 @@ const VirtualScrollerPinnedRows = styled('div', {
   const boxShadowColor = getBoxShadowColor(theme);
   return {
     position: 'sticky',
-    // should be above the detail panel
-    zIndex: 3,
+    // should be above the no rows overlay
+    zIndex: 4,
     backgroundColor: ((theme as any).vars || theme).palette.background.default,
     ...((theme as any).vars
       ? { backgroundImage: (theme as any).vars.overlays?.[2] }

@@ -43,7 +43,7 @@ export { useGridLazyLoader } from '../hooks/features/lazyLoader/useGridLazyLoade
 export { useGridLazyLoaderPreProcessors } from '../hooks/features/lazyLoader/useGridLazyLoaderPreProcessors';
 
 export type {
-  GridExperimentalProFeatures,
+  GridExperimentalExtraFeatures,
   DataGridExtraPropsWithoutDefaultValue,
   DataGridExtraPropsWithDefaultValue,
 } from '../models/dataGridExtraProps';

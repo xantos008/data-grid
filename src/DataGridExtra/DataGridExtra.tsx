@@ -22,7 +22,6 @@ const DataGridExtraRaw = React.forwardRef(function DataGridExtra<R extends GridV
 ) {
   const props = useDataGridExtraProps(inProps);
   const privateApiRef = useDataGridExtraComponent(props.apiRef, props);
-
   const pinnedColumns = useGridSelector(privateApiRef, gridPinnedColumnsSelector);
 
   return (
@@ -100,7 +99,7 @@ DataGridExtraRaw.propTypes = {
   checkboxSelectionVisibleOnly: chainPropTypes(PropTypes.bool, (props: any) => {
     if (!props.pagination && props.checkboxSelectionVisibleOnly) {
       return new Error(
-        'DataGridExtra: The `checkboxSelectionVisibleOnly` prop has no effect when the pagination is not enabled.',
+        'MUI: The `checkboxSelectionVisibleOnly` prop has no effect when the pagination is not enabled.',
       );
     }
     return null;
@@ -270,7 +269,7 @@ DataGridExtraRaw.propTypes = {
   filterMode: chainPropTypes(PropTypes.oneOf(['client', 'server']), (props: any) => {
     if (props.treeData && props.filterMode === 'server') {
       return new Error(
-        'DataGridExtra: The `filterMode="server"` prop is not available when the `treeData` is enabled.',
+        'MUI: The `filterMode="server"` prop is not available when the `treeData` is enabled.',
       );
     }
     return null;
@@ -377,7 +376,7 @@ DataGridExtraRaw.propTypes = {
   hideFooterRowCount: chainPropTypes(PropTypes.bool, (props: any) => {
     if (props.pagination && props.hideFooterRowCount) {
       return new Error(
-        'DataGridExtra: The `hideFooterRowCount` prop has no effect when the pagination is enabled.',
+        'MUI: The `hideFooterRowCount` prop has no effect when the pagination is enabled.',
       );
     }
     return null;
