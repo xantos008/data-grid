@@ -23,6 +23,8 @@ export const DATA_GRID_EXTRA_PROPS_DEFAULT_VALUES: DataGridExtraPropsWithDefault
   treeData: false,
   defaultGroupingExpansionDepth: 0,
   disableColumnPinning: false,
+  autosizeOnMount: false,
+  disableAutosize: false,
   keepColumnPositionIfDraggedOutside: false,
   disableChildrenFiltering: false,
   disableChildrenSorting: false,

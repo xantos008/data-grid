@@ -42,6 +42,8 @@ import {
   columnGroupsStateInitializer,
   headerFilteringStateInitializer,
   useGridHeaderFiltering,
+  virtualizationStateInitializer,
+  useGridVirtualization,
 } from '@mui/x-data-grid/internals';
 import { GridApiExtra, GridPrivateApiExtra } from '../models/gridApiExtra';
 import { DataGridExtraProcessedProps } from '../models/dataGridExtraProps';
@@ -119,6 +121,7 @@ export const useDataGridExtraComponent = (
   useGridInitializeState(rowsMetaStateInitializer, apiRef, props);
   useGridInitializeState(columnMenuStateInitializer, apiRef, props);
   useGridInitializeState(columnGroupsStateInitializer, apiRef, props);
+  useGridInitializeState(virtualizationStateInitializer, apiRef, props);
 
   useGridHeaderFiltering(apiRef, props);
   useGridTreeData(apiRef);
@@ -153,6 +156,7 @@ export const useDataGridExtraComponent = (
   useGridDimensions(apiRef, props);
   useGridEvents(apiRef, props);
   useGridStatePersistence(apiRef);
+  useGridVirtualization(apiRef, props);
 
   return apiRef;
 };
