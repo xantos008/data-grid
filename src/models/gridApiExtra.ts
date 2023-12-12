@@ -13,6 +13,7 @@ import type {
   GridRowPinningApi,
   GridDetailPanelPrivateApi,
 } from '../hooks';
+import type { DataGridExtraProcessedProps } from './dataGridExtraProps';
 
 /**
  * The api of `DataGridExtra`.
@@ -25,10 +26,9 @@ export interface GridApiExtra
     GridDetailPanelApi,
     GridRowPinningApi,
     GridRowMultiSelectionApi,
-    GridColumnReorderApi,
     GridColumnReorderApi {}
 
 export interface GridPrivateApiExtra
   extends GridApiExtra,
-    GridPrivateOnlyApiCommon<GridApiExtra, GridPrivateApiExtra>,
+    GridPrivateOnlyApiCommon<GridApiExtra, GridPrivateApiExtra, DataGridExtraProcessedProps>,
     GridDetailPanelPrivateApi {}

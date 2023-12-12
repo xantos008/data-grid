@@ -37,7 +37,7 @@ const useUtilityClasses = (ownerState: OwnerState) => {
 const GridHeaderFilterRow = styled('div', {
   name: 'MuiDataGrid',
   slot: 'HeaderFilterRow',
-  overridesResolver: (props, styles) => styles.headerFilterRow,
+  overridesResolver: (_props, styles) => styles.headerFilterRow,
 })<{ ownerState: OwnerState }>(() => ({
   display: 'flex',
 }));
@@ -76,25 +76,25 @@ export const useGridColumnHeaders = (props: UseGridColumnHeadersProps) => {
   );
 
   const getFilterItem = React.useCallback(
-      (colDef: GridStateColDef) => {
-        const filterModelItem = filterModel?.items.find(
-            (it) => it.field === colDef.field && it.operator !== 'isAnyOf',
-        );
-        if (filterModelItem != null) {
-          // there's a valid `filterModelItem` for this column
-          return filterModelItem;
-        }
-        const defaultCachedItem = filterItemsCache[colDef.field];
-        if (defaultCachedItem != null) {
-          // there's a cached `defaultItem` for this column
-          return defaultCachedItem;
-        }
-        // there's no cached `defaultItem` for this column, let's generate one and cache it
-        const defaultItem = getGridFilter(colDef);
-        filterItemsCache[colDef.field] = defaultItem;
-        return defaultItem;
-      },
-      [filterModel],
+    (colDef: GridStateColDef) => {
+      const filterModelItem = filterModel?.items.find(
+        (it) => it.field === colDef.field && it.operator !== 'isAnyOf',
+      );
+      if (filterModelItem != null) {
+        // there's a valid `filterModelItem` for this column
+        return filterModelItem;
+      }
+      const defaultCachedItem = filterItemsCache[colDef.field];
+      if (defaultCachedItem != null) {
+        // there's a cached `defaultItem` for this column
+        return defaultCachedItem;
+      }
+      // there's no cached `defaultItem` for this column, let's generate one and cache it
+      const defaultItem = getGridFilter(colDef);
+      filterItemsCache[colDef.field] = defaultItem;
+      return defaultItem;
+    },
+    [filterModel],
   );
 
   const getColumnFilters = (params?: GetHeadersParams, other = {}) => {

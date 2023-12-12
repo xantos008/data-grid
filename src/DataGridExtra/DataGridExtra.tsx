@@ -22,6 +22,7 @@ const DataGridExtraRaw = React.forwardRef(function DataGridExtra<R extends GridV
 ) {
   const props = useDataGridExtraProps(inProps);
   const privateApiRef = useDataGridExtraComponent(props.apiRef, props);
+
   const pinnedColumns = useGridSelector(privateApiRef, gridPinnedColumnsSelector);
 
   return (
@@ -406,6 +407,12 @@ DataGridExtraRaw.propTypes = {
    * @default false
    */
   hideFooterSelectedRowCount: PropTypes.bool,
+  /**
+   * If `true`, the diacritics (accents) are ignored when filtering or quick filtering.
+   * E.g. when filter value is `cafe`, the rows with `café` will be visible.
+   * @default false
+   */
+  ignoreDiacritics: PropTypes.bool,
   /**
    * The initial state of the DataGridExtra.
    * The data in it will be set in the state on initialization but will not be controlled.
@@ -803,6 +810,13 @@ DataGridExtraRaw.propTypes = {
    */
   rowModesModel: PropTypes.object,
   /**
+   * The milliseconds delay to wait after measuring the row height before recalculating row positions.
+   * Setting it to a lower value could be useful when using dynamic row height,
+   * but might reduce performance when displaying a large number of rows.
+   * @default 166
+   */
+  rowPositionsDebounceMs: PropTypes.number,
+  /**
    * If `true`, the reordering of rows is enabled.
    * @default false
    */
@@ -916,7 +930,7 @@ DataGridExtraRaw.propTypes = {
   /**
    * If `true`, the grid will not use `valueFormatter` when exporting to CSV or copying to clipboard.
    * If an object is provided, you can choose to ignore the `valueFormatter` for CSV export or clipboard export.
-   * @default: false
+   * @default false
    */
   unstable_ignoreValueFormatterDuringExport: PropTypes.oneOfType([
     PropTypes.shape({

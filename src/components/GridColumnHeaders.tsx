@@ -55,7 +55,7 @@ interface GridColumnHeadersPinnedColumnHeadersProps {
 
 // Inspired by https://github.com/material-components/material-components-ios/blob/bca36107405594d5b7b16265a5b0ed698f85a5ee/components/Elevation/src/UIColor%2BMaterialElevation.m#L61
 const getOverlayAlpha = (elevation: number) => {
-  let alphaValue;
+  let alphaValue: number;
   if (elevation < 1) {
     alphaValue = 5.11916 * elevation ** 2;
   } else {
@@ -67,7 +67,7 @@ const getOverlayAlpha = (elevation: number) => {
 const GridColumnHeadersPinnedColumnHeaders = styled('div', {
   name: 'MuiDataGrid',
   slot: 'PinnedColumnHeaders',
-  overridesResolver: (props, styles) => [
+  overridesResolver: (_props, styles) => [
     { [`&.${gridClasses['pinnedColumnHeaders--left']}`]: styles['pinnedColumnHeaders--left'] },
     { [`&.${gridClasses['pinnedColumnHeaders--right']}`]: styles['pinnedColumnHeaders--right'] },
     styles.pinnedColumnHeaders,

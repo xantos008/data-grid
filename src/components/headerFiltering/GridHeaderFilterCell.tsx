@@ -256,19 +256,19 @@ const GridHeaderFilterCell = React.forwardRef<HTMLDivElement, GridHeaderFilterCe
               applyValue={applyFilterChanges}
               onFocus={() => apiRef.current.startHeaderFilterEditMode(colDef.field)}
               onBlur={(event: React.FocusEvent) => {
-                  apiRef.current.stopHeaderFilterEditMode();
-                  // Blurring an input element should reset focus state only if `relatedTarget` is not the header filter cell
-                  if (!event.relatedTarget?.className.includes('columnHeader')) {
-                      apiRef.current.setState((state) => ({
-                          ...state,
-                          focus: {
-                              cell: null,
-                              columnHeader: null,
-                              columnHeaderFilter: null,
-                              columnGroupHeader: null,
-                          },
-                      }));
-                  }
+                apiRef.current.stopHeaderFilterEditMode();
+                // Blurring an input element should reset focus state only if `relatedTarget` is not the header filter cell
+                if (!event.relatedTarget?.className.includes('columnHeader')) {
+                  apiRef.current.setState((state) => ({
+                    ...state,
+                    focus: {
+                      cell: null,
+                      columnHeader: null,
+                      columnHeaderFilter: null,
+                      columnGroupHeader: null,
+                    },
+                  }));
+                }
               }}
               label={capitalize(label)}
               placeholder=""

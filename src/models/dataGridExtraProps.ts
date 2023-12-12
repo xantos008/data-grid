@@ -103,11 +103,11 @@ export interface DataGridExtraPropsWithDefaultValue extends DataGridPropsWithDef
    */
   isGroupExpandedByDefault?: (node: GridGroupNode) => boolean;
   /**
-   * if `true`, columns are auto-sized after the data grid is mounted.
+   * If `true`, columns are autosized after the datagrid is mounted.
    * @default false
    */
   autosizeOnMount: boolean;
-   /**
+  /**
    * If `true`, column autosizing on header separator double-click is disabled.
    * @default false
    */
