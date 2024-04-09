@@ -72,7 +72,7 @@ export const useGridColumnReorder = (
   });
   const originColumnIndex = React.useRef<number | null>(null);
   const forbiddenIndexes = React.useRef<{ [key: number]: boolean }>({});
-  const removeDnDStylesTimeout = React.useRef<any>();
+  const removeDnDStylesTimeout = React.useRef<ReturnType<typeof setTimeout>>();
   const ownerState = { classes: props.classes };
   const classes = useUtilityClasses(ownerState);
   const theme = useTheme();
@@ -111,15 +111,15 @@ export const useGridColumnReorder = (
 
       originColumnIndex.current = apiRef.current.getColumnIndex(params.field, false);
 
-      const draggingColumnGroupPath = apiRef.current.unstable_getColumnGroupPath(params.field);
+      const draggingColumnGroupPath = apiRef.current.getColumnGroupPath(params.field);
 
       const columnIndex = originColumnIndex.current;
       const allColumns = apiRef.current.getAllColumns();
-      const groupsLookup = apiRef.current.unstable_getAllGroupDetails();
+      const groupsLookup = apiRef.current.getAllGroupDetails();
 
       const getGroupPathFromColumnIndex = (colIndex: number) => {
         const field = allColumns[colIndex].field;
-        return apiRef.current.unstable_getColumnGroupPath(field);
+        return apiRef.current.getColumnGroupPath(field);
       };
 
       // The limitingGroupId is the id of the group from which the dragged column should not escape
@@ -276,7 +276,7 @@ export const useGridColumnReorder = (
               forbiddenIndexes.current[indexWithOffset] ||
               allColumns[indexWithOffset].field === nextVisibleColumnField
             ) {
-              // If we ended up on a visible column, or a forbidden one, we can not do the reorder
+              // If we ended up on a visible column, or a forbidden one, we cannot do the reorder
               canBeReordered = false;
             }
           }

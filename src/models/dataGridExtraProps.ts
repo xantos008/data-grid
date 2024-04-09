@@ -14,8 +14,9 @@ import {
   DataGridPropsWithDefaultValues,
   DataGridPropsWithComplexDefaultValueAfterProcessing,
   DataGridPropsWithComplexDefaultValueBeforeProcessing,
+  GridPinnedColumnFields,
+  DataGridProSharedPropsWithDefaultValue,
 } from '@mui/x-data-grid/internals';
-import type { GridPinnedColumns } from '../hooks/features/columnPinning';
 import type { GridPinnedRowsProp } from '../hooks/features/rowPinning';
 import { GridApiExtra } from './gridApiExtra';
 import {
@@ -23,28 +24,17 @@ import {
   GridGroupingColDefOverrideParams,
 } from './gridGroupingColDefOverride';
 import { GridInitialStateExtra } from './gridStateExtra';
-import { GridExtraSlotsComponent, UncapitalizedGridExtraSlotsComponent } from './gridExtraSlotsComponent';
+import { GridExtraSlotsComponent } from './gridExtraSlotsComponent';
 import type { GridExtraSlotProps } from './gridExtraSlotProps';
-import { GridAutosizeOptions } from '../hooks';
 
-export interface GridExperimentalExtraFeatures extends GridExperimentalFeatures {
-  /**
-   * Enables the data grid to lazy load rows while scrolling.
-   */
-  lazyLoading: boolean;
-}
+export interface GridExperimentalExtraFeatures extends GridExperimentalFeatures {}
 
 interface DataGridExtraPropsWithComplexDefaultValueBeforeProcessing
   extends Omit<DataGridPropsWithComplexDefaultValueBeforeProcessing, 'components'> {
   /**
    * Overridable components.
-   * @deprecated Use the `slots` prop instead.
    */
-  components?: Partial<GridExtraSlotsComponent>;
-  /**
-   * Overridable components.
-   */
-  slots?: Partial<UncapitalizedGridExtraSlotsComponent>;
+  slots?: Partial<GridExtraSlotsComponent>;
 }
 
 /**
@@ -52,7 +42,7 @@ interface DataGridExtraPropsWithComplexDefaultValueBeforeProcessing
  */
 export interface DataGridExtraProps<R extends GridValidRowModel = any>
   extends Omit<
-    Partial<DataGridExtraPropsWithDefaultValue> &
+    Partial<DataGridExtraPropsWithDefaultValue<R>> &
       DataGridExtraPropsWithComplexDefaultValueBeforeProcessing &
       DataGridExtraPropsWithoutDefaultValue<R>,
     DataGridExtraForcedPropsKey
@@ -60,14 +50,14 @@ export interface DataGridExtraProps<R extends GridValidRowModel = any>
 
 interface DataGridExtraPropsWithComplexDefaultValueAfterProcessing
   extends Omit<DataGridPropsWithComplexDefaultValueAfterProcessing, 'slots'> {
-  slots: UncapitalizedGridExtraSlotsComponent;
+  slots: GridExtraSlotsComponent;
 }
 
 /**
  * The props of the `DataGridExtra` component after the pre-processing phase.
  */
 export interface DataGridExtraProcessedProps<R extends GridValidRowModel = any>
-  extends DataGridExtraPropsWithDefaultValue,
+  extends DataGridExtraPropsWithDefaultValue<R>,
     DataGridExtraPropsWithComplexDefaultValueAfterProcessing,
     Omit<DataGridExtraPropsWithoutDefaultValue<R>, 'componentsProps'> {}
 
@@ -78,7 +68,9 @@ export type DataGridExtraForcedPropsKey = 'signature';
  * None of the entry of this interface should be optional, they all have default values and `DataGridProps` already applies a `Partial<DataGridSimpleOptions>` for the public interface
  * The controlled model do not have a default value at the prop processing level, so they must be defined in `DataGridOtherProps`
  */
-export interface DataGridExtraPropsWithDefaultValue extends DataGridPropsWithDefaultValues {
+export interface DataGridExtraPropsWithDefaultValue<R extends GridValidRowModel = any>
+  extends DataGridPropsWithDefaultValues<R>,
+    DataGridProSharedPropsWithDefaultValue {
   /**
    * Set the area in `px` at the bottom of the grid viewport where onRowsScrollEnd is called.
    * @default 80
@@ -102,16 +94,6 @@ export interface DataGridExtraPropsWithDefaultValue extends DataGridPropsWithDef
    * @returns {boolean} A boolean indicating if the group is expanded.
    */
   isGroupExpandedByDefault?: (node: GridGroupNode) => boolean;
-  /**
-   * If `true`, columns are autosized after the datagrid is mounted.
-   * @default false
-   */
-  autosizeOnMount: boolean;
-  /**
-   * If `true`, column autosizing on header separator double-click is disabled.
-   * @default false
-   */
-  disableAutosize: boolean;
   /**
    * If `true`, the column pinning is disabled.
    * @default false
@@ -152,11 +134,6 @@ export interface DataGridExtraPropsWithDefaultValue extends DataGridPropsWithDef
    * @default false
    */
   keepColumnPositionIfDraggedOutside: boolean;
-  /**
-   * If `true`, enables the data grid filtering on header feature.
-   * @default false
-   */
-  unstable_headerFilters: boolean;
 }
 
 export interface DataGridExtraPropsWithoutDefaultValue<R extends GridValidRowModel = any>
@@ -168,10 +145,6 @@ export interface DataGridExtraPropsWithoutDefaultValue<R extends GridValidRowMod
    * The ref object that allows grid manipulation. Can be instantiated with `useGridApiRef()`.
    */
   apiRef?: React.MutableRefObject<GridApiExtra>;
-  /**
-   * The options for autosize when user-initiated.
-   */
-  autosizeOptions?: GridAutosizeOptions;
   /**
    * The initial state of the DataGridExtra.
    * The data in it will be set in the state on initialization but will not be controlled.
@@ -193,20 +166,6 @@ export interface DataGridExtraPropsWithoutDefaultValue<R extends GridValidRowMod
    */
   getTreeDataPath?: (row: R) => string[];
   /**
-   * Callback fired while a column is being resized.
-   * @param {GridColumnResizeParams} params With all properties from [[GridColumnResizeParams]].
-   * @param {MuiEvent<React.MouseEvent>} event The event object.
-   * @param {GridCallbackDetails} details Additional details for this callback.
-   */
-  onColumnResize?: GridEventListener<'columnResize'>;
-  /**
-   * Callback fired when the width of a column is changed.
-   * @param {GridColumnResizeParams} params With all properties from [[GridColumnResizeParams]].
-   * @param {MuiEvent<React.MouseEvent>} event The event object.
-   * @param {GridCallbackDetails} details Additional details for this callback.
-   */
-  onColumnWidthChange?: GridEventListener<'columnWidthChange'>;
-  /**
    * Callback fired when scrolling to the bottom of the grid viewport.
    * @param {GridRowScrollEndParams} params With all properties from [[GridRowScrollEndParams]].
    * @param {MuiEvent<{}>} event The event object.
@@ -216,13 +175,16 @@ export interface DataGridExtraPropsWithoutDefaultValue<R extends GridValidRowMod
   /**
    * The column fields to display pinned to left or right.
    */
-  pinnedColumns?: GridPinnedColumns;
+  pinnedColumns?: GridPinnedColumnFields;
   /**
    * Callback fired when the pinned columns have changed.
-   * @param {GridPinnedColumns} pinnedColumns The changed pinned columns.
+   * @param {GridPinnedColumnFields} pinnedColumns The changed pinned columns.
    * @param {GridCallbackDetails} details Additional details for this callback.
    */
-  onPinnedColumnsChange?: (pinnedColumns: GridPinnedColumns, details: GridCallbackDetails) => void;
+  onPinnedColumnsChange?: (
+    pinnedColumns: GridPinnedColumnFields,
+    details: GridCallbackDetails,
+  ) => void;
   /**
    * The grouping column used by the tree data.
    */
@@ -269,9 +231,4 @@ export interface DataGridExtraPropsWithoutDefaultValue<R extends GridValidRowMod
    * Overridable components props dynamically passed to the component at rendering.
    */
   slotProps?: GridExtraSlotProps;
-  /**
-   * Overridable components props dynamically passed to the component at rendering.
-   * @deprecated Use the `slotProps` prop instead.
-   */
-  componentsProps?: GridExtraSlotProps;
 }

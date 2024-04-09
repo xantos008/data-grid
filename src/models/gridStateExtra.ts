@@ -1,13 +1,13 @@
 import {
   GridInitialState as GridInitialStateCommunity,
   GridState as GridStateCommunity,
+  GridColumnPinningState,
+  GridPinnedColumnFields,
 } from '@mui/x-data-grid';
 import type {
   GridDetailPanelState,
   GridDetailPanelInitialState,
   GridColumnReorderState,
-  GridColumnResizeState,
-  GridColumnPinningState,
 } from '../hooks';
 
 /**
@@ -15,7 +15,6 @@ import type {
  */
 export interface GridStateExtra extends GridStateCommunity {
   columnReorder: GridColumnReorderState;
-  columnResize: GridColumnResizeState;
   pinnedColumns: GridColumnPinningState;
   detailPanel: GridDetailPanelState;
 }
@@ -24,6 +23,6 @@ export interface GridStateExtra extends GridStateCommunity {
  * The initial state of `DataGridExtra`.
  */
 export interface GridInitialStateExtra extends GridInitialStateCommunity {
-  pinnedColumns?: GridColumnPinningState;
+  pinnedColumns?: GridPinnedColumnFields;
   detailPanel?: GridDetailPanelInitialState;
 }

@@ -28,6 +28,7 @@ import {
   sortingStateInitializer,
   useGridScroll,
   useGridEvents,
+  dimensionsStateInitializer,
   useGridDimensions,
   useGridStatePersistence,
   useGridRowSelectionPreProcessors,
@@ -44,6 +45,8 @@ import {
   useGridHeaderFiltering,
   virtualizationStateInitializer,
   useGridVirtualization,
+  useGridColumnResize,
+  columnResizeStateInitializer,
 } from '@mui/x-data-grid/internals';
 import { GridApiExtra, GridPrivateApiExtra } from '../models/gridApiExtra';
 import { DataGridExtraProcessedProps } from '../models/dataGridExtraProps';
@@ -52,10 +55,6 @@ import {
   useGridColumnReorder,
   columnReorderStateInitializer,
 } from '../hooks/features/columnReorder/useGridColumnReorder';
-import {
-  useGridColumnResize,
-  columnResizeStateInitializer,
-} from '../hooks/features/columnResize/useGridColumnResize';
 import { useGridTreeData } from '../hooks/features/treeData/useGridTreeData';
 import { useGridTreeDataPreProcessors } from '../hooks/features/treeData/useGridTreeDataPreProcessors';
 import {
@@ -101,6 +100,7 @@ export const useDataGridExtraComponent = (
   /**
    * Register all state initializers here.
    */
+  useGridInitializeState(dimensionsStateInitializer, apiRef, props);
   useGridInitializeState(headerFilteringStateInitializer, apiRef, props);
   useGridInitializeState(rowSelectionStateInitializer, apiRef, props);
   useGridInitializeState(detailPanelStateInitializer, apiRef, props);
@@ -130,7 +130,7 @@ export const useDataGridExtraComponent = (
   useGridRowPinning(apiRef, props);
   useGridColumns(apiRef, props);
   useGridRows(apiRef, props);
-  useGridParamsApi(apiRef, props);
+  useGridParamsApi(apiRef);
   useGridDetailPanel(apiRef, props);
   useGridColumnSpanning(apiRef);
   useGridColumnGrouping(apiRef, props);

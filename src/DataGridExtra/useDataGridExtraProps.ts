@@ -5,13 +5,13 @@ import {
   DATA_GRID_PROPS_DEFAULT_VALUES,
   GridValidRowModel,
 } from '@mui/x-data-grid';
-import { computeSlots, uncapitalizeObjectKeys, useProps } from '@mui/x-data-grid/internals';
+import { computeSlots, useProps } from '@mui/x-data-grid/internals';
 import {
   DataGridExtraProps,
   DataGridExtraProcessedProps,
   DataGridExtraPropsWithDefaultValue,
 } from '../models/dataGridExtraProps';
-import { GridExtraSlotsComponent, UncapitalizedGridExtraSlotsComponent } from '../models';
+import { GridExtraSlotsComponent } from '../models';
 import { DATA_GRID_EXTRA_DEFAULT_SLOTS_COMPONENTS } from '../constants/dataGridExtraDefaultSlotsComponents';
 
 /**
@@ -31,13 +31,14 @@ export const DATA_GRID_EXTRA_PROPS_DEFAULT_VALUES: DataGridExtraPropsWithDefault
   rowReordering: false,
   rowsLoadingMode: 'client',
   getDetailPanelHeight: () => 500,
-  unstable_headerFilters: false,
+  headerFilters: false,
 };
 
-const defaultSlots = uncapitalizeObjectKeys(DATA_GRID_EXTRA_DEFAULT_SLOTS_COMPONENTS)!;
+const defaultSlots = DATA_GRID_EXTRA_DEFAULT_SLOTS_COMPONENTS;
 
 export const useDataGridExtraProps = <R extends GridValidRowModel>(inProps: DataGridExtraProps<R>) => {
-  const [components, componentsProps, themedProps] = useProps(
+  const themedProps = useProps(
+    // eslint-disable-next-line material-ui/mui-name-matches-component-name
     useThemeProps({
       props: inProps,
       name: 'MuiDataGrid',
@@ -49,14 +50,13 @@ export const useDataGridExtraProps = <R extends GridValidRowModel>(inProps: Data
     [themedProps.localeText],
   );
 
-  const slots = React.useMemo<UncapitalizedGridExtraSlotsComponent>(
+  const slots = React.useMemo<GridExtraSlotsComponent>(
     () =>
       computeSlots<GridExtraSlotsComponent>({
         defaultSlots,
         slots: themedProps.slots,
-        components,
       }),
-    [components, themedProps.slots],
+    [themedProps.slots],
   );
 
   return React.useMemo<DataGridExtraProcessedProps<R>>(
@@ -65,9 +65,8 @@ export const useDataGridExtraProps = <R extends GridValidRowModel>(inProps: Data
       ...themedProps,
       localeText,
       slots,
-      slotProps: themedProps.slotProps ?? componentsProps,
       signature: 'DataGridExtra',
     }),
-    [themedProps, localeText, slots, componentsProps],
+    [themedProps, localeText, slots],
   );
 };

@@ -1,6 +1,6 @@
 {
   "name": "data-grid-extra",
-  "version": "3.7.0",
+  "version": "4.1.1",
   "description": "A react data table implementation using @mui.",
   "author": "xantos008",
   "files": [
@@ -40,7 +40,7 @@
     "build:simple": "npm run clean && rollup -c --bundleConfigAsCjs",
     "build": "npm run clean && rollup -c --bundleConfigAsCjs && npm run postbuild",
     "postbuild": "cp package.json dist && cp README.md dist && cp LICENSE dist && node ./scripts/runUpdatePackageJson.js",
-    "publish": "npm run compile && npm run build && npm run pack && npm publish data-grid-extra-3.6.0.tgz",
+    "publish": "npm run compile && npm run build && npm run pack && npm publish data-grid-extra-4.1.1.tgz",
     "pack": "npm pack ./build/"
   },
   "repository": {
@@ -48,19 +48,19 @@
     "url": "https://github.com/xantos008/data-grid-extra.git"
   },
   "dependencies": {
-    "@babel/runtime": "^7.23.6",
-    "@emotion/styled": "^11.11.0",
-    "@mui/utils": "^5.14.16",
-    "@mui/x-data-grid": "6.18.4",
-    "@types/format-util": "^1.0.3",
-    "clsx": "^2.0.0",
+    "@babel/runtime": "^7.24.0",
+    "@emotion/styled": "^11.11.5",
+    "@mui/utils": "^5.15.14",
+    "@mui/x-data-grid": "7.1.1",
+    "@types/format-util": "^1.0.4",
+    "clsx": "^2.1.0",
     "prop-types": "^15.8.1",
     "reselect": "^4.1.8",
     "semver": "^7.5.4"
   },
   "peerDependencies": {
-    "@mui/material": "^5.14.10",
-    "@mui/system": "^5.14.10",
+    "@mui/material": "^5.15.14",
+    "@mui/system": "^5.15.14",
     "react": "^17.0.2 || ^18.0.0",
     "react-dom": "^17.0.2 || ^18.0.0"
   },

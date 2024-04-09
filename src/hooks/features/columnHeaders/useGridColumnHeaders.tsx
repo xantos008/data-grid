@@ -1,21 +1,21 @@
 import * as React from 'react';
 import {
-  unstable_gridFocusColumnHeaderFilterSelector,
+  gridFocusColumnHeaderFilterSelector,
   useGridSelector,
   gridFilterModelSelector,
-  unstable_gridTabIndexColumnHeaderFilterSelector,
+  gridTabIndexColumnHeaderFilterSelector,
   getDataGridUtilityClass,
   GridFilterItem,
+  GridPinnedColumnPosition,
 } from '@mui/x-data-grid';
-import { styled } from '@mui/system';
 import {
   useGridColumnHeaders as useGridColumnHeadersCommunity,
   UseGridColumnHeadersProps,
   GetHeadersParams,
-  getTotalHeaderHeight,
   useGridPrivateApiContext,
   getGridFilter,
   GridStateColDef,
+  GridColumnHeaderRow,
 } from '@mui/x-data-grid/internals';
 import { unstable_composeClasses as composeClasses } from '@mui/utils';
 import { useGridRootProps } from '../../utils/useGridRootProps';
@@ -34,14 +34,6 @@ const useUtilityClasses = (ownerState: OwnerState) => {
   }, [classes]);
 };
 
-const GridHeaderFilterRow = styled('div', {
-  name: 'MuiDataGrid',
-  slot: 'HeaderFilterRow',
-  overridesResolver: (_props, styles) => styles.headerFilterRow,
-})<{ ownerState: OwnerState }>(() => ({
-  display: 'flex',
-}));
-
 const filterItemsCache: Record<GridStateColDef['field'], GridFilterItem> = Object.create(null);
 
 export const useGridColumnHeaders = (props: UseGridColumnHeadersProps) => {
@@ -49,9 +41,18 @@ export const useGridColumnHeaders = (props: UseGridColumnHeadersProps) => {
   const { headerGroupingMaxDepth, hasOtherElementInTabSequence } = props;
   const columnHeaderFilterTabIndexState = useGridSelector(
     apiRef,
-    unstable_gridTabIndexColumnHeaderFilterSelector,
+    gridTabIndexColumnHeaderFilterSelector,
   );
-  const { getColumnsToRender, getRootProps, ...otherProps } = useGridColumnHeadersCommunity({
+  const {
+    getColumnsToRender,
+    renderContext,
+    leftRenderContext,
+    rightRenderContext,
+    pinnedColumns,
+    visibleColumns,
+    getCellOffsetStyle,
+    ...otherProps
+  } = useGridColumnHeadersCommunity({
     ...props,
     hasOtherElementInTabSequence:
       hasOtherElementInTabSequence || columnHeaderFilterTabIndexState !== null,
@@ -63,17 +64,11 @@ export const useGridColumnHeaders = (props: UseGridColumnHeadersProps) => {
   const headerFilterMenuRef = React.useRef<HTMLButtonElement | null>(null);
   const rootProps = useGridRootProps();
   const classes = useUtilityClasses(rootProps);
-  const disableHeaderFiltering = !rootProps.unstable_headerFilters;
-  const headerHeight = Math.floor(rootProps.columnHeaderHeight * props.densityFactor);
+  const disableHeaderFiltering = !rootProps.headerFilters;
+  const dimensions = apiRef.current.getRootDimensions();
   const filterModel = useGridSelector(apiRef, gridFilterModelSelector);
-  const totalHeaderHeight =
-    getTotalHeaderHeight(apiRef, rootProps.columnHeaderHeight) +
-    (disableHeaderFiltering ? 0 : headerHeight);
 
-  const columnHeaderFilterFocus = useGridSelector(
-    apiRef,
-    unstable_gridFocusColumnHeaderFilterSelector,
-  );
+  const columnHeaderFilterFocus = useGridSelector(apiRef, gridFocusColumnHeaderFilterSelector);
 
   const getFilterItem = React.useCallback(
     (colDef: GridStateColDef) => {
@@ -97,18 +92,8 @@ export const useGridColumnHeaders = (props: UseGridColumnHeadersProps) => {
     [filterModel],
   );
 
-  const getColumnFilters = (params?: GetHeadersParams, other = {}) => {
-    if (disableHeaderFiltering) {
-      return null;
-    }
-
-    const columnsToRender = getColumnsToRender(params);
-
-    if (columnsToRender == null) {
-      return null;
-    }
-
-    const { renderedColumns, firstColumnToRender } = columnsToRender;
+  const getColumnFilters = (params?: GetHeadersParams) => {
+    const { renderedColumns, firstColumnToRender } = getColumnsToRender(params);
 
     const filters: React.JSX.Element[] = [];
     for (let i = 0; i < renderedColumns.length; i += 1) {
@@ -127,56 +112,78 @@ export const useGridColumnHeaders = (props: UseGridColumnHeadersProps) => {
           ? colDef.headerClassName({ field: colDef.field, colDef })
           : colDef.headerClassName;
 
-      // TODO: Support for `isAnyOf` operator
-      const filterOperators =
-        colDef.filterOperators?.filter((operator) => operator.value !== 'isAnyOf') ?? [];
-
       const item = getFilterItem(colDef);
+
+      const pinnedPosition = params?.position;
+      const style = getCellOffsetStyle({
+        pinnedPosition,
+        columnIndex,
+        computedWidth: colDef.computedWidth,
+      });
 
       filters.push(
         <rootProps.slots.headerFilterCell
           colIndex={columnIndex}
           key={`${colDef.field}-filter`}
-          height={headerHeight}
+          height={dimensions.headerHeight}
           width={colDef.computedWidth}
           colDef={colDef}
           hasFocus={hasFocus}
           tabIndex={tabIndex}
           headerFilterMenuRef={headerFilterMenuRef}
           headerClassName={headerClassName}
-          filterOperators={filterOperators}
           data-field={colDef.field}
           item={item}
+          pinnedPosition={pinnedPosition}
+          style={style}
+          indexInSection={i}
+          sectionLength={renderedColumns.length}
           {...rootProps.slotProps?.headerFilterCell}
-          {...other}
         />,
       );
     }
 
+    return otherProps.getFillers(params, filters, 0, true);
+  };
+
+  const getColumnFiltersRow = () => {
+    if (disableHeaderFiltering) {
+      return null;
+    }
+
     return (
-      <GridHeaderFilterRow
+      <GridColumnHeaderRow
         ref={headerFiltersRef}
-        ownerState={rootProps}
         className={classes.headerFilterRow}
         role="row"
         aria-rowindex={headerGroupingMaxDepth + 2}
+        ownerState={rootProps}
       >
-        {filters}
-      </GridHeaderFilterRow>
+        {leftRenderContext &&
+          getColumnFilters({
+            position: GridPinnedColumnPosition.LEFT,
+            renderContext: leftRenderContext,
+            minFirstColumn: leftRenderContext.firstColumnIndex,
+            maxLastColumn: leftRenderContext.lastColumnIndex,
+          })}
+        {getColumnFilters({
+          renderContext,
+          minFirstColumn: pinnedColumns.left.length,
+          maxLastColumn: visibleColumns.length - pinnedColumns.right.length,
+        })}
+        {rightRenderContext &&
+          getColumnFilters({
+            position: GridPinnedColumnPosition.RIGHT,
+            renderContext: rightRenderContext,
+            minFirstColumn: rightRenderContext.firstColumnIndex,
+            maxLastColumn: rightRenderContext.lastColumnIndex,
+          })}
+      </GridColumnHeaderRow>
     );
-  };
-
-  const rootStyle = {
-    minHeight: totalHeaderHeight,
-    maxHeight: totalHeaderHeight,
-    lineHeight: `${headerHeight}px`,
   };
 
   return {
     ...otherProps,
-    getColumnFilters,
-    getRootProps: disableHeaderFiltering
-      ? getRootProps
-      : (other = {}) => ({ style: rootStyle, ...other }),
+    getColumnFiltersRow,
   };
 };

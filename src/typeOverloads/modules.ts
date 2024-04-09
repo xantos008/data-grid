@@ -1,24 +1,21 @@
-import { GridRowId } from '@mui/x-data-grid';
+import { GridRowId, GridPinnedColumnFields } from '@mui/x-data-grid';
 import type {
   GridRowScrollEndParams,
   GridRowOrderChangeParams,
   GridFetchRowsParams,
 } from '../models';
-import type { GridHeaderFilterCellProps } from '../components/headerFiltering/GridHeaderFilterCell';
-import type {
-  GridColumnPinningInternalCache,
-  GridPinnedColumns,
-} from '../hooks/features/columnPinning/gridColumnPinningInterface';
+import type { GridRenderHeaderFilterProps } from '../components/headerFiltering/GridHeaderFilterCell';
+import type { GridColumnPinningInternalCache } from '../hooks/features/columnPinning/gridColumnPinningInterface';
 import type { GridCanBeReorderedPreProcessingContext } from '../hooks/features/columnReorder/columnReorderInterfaces';
 import { GridRowPinningInternalCache } from '../hooks/features/rowPinning/gridRowPinningInterface';
 
 export interface GridColDefExtra {
   /**
    * Allows to render a component in the column header filter cell.
-   * @param {GridHeaderFilterCellProps} params Object containing parameters for the renderer.
+   * @param {GridRenderHeaderFilterProps} params Object containing parameters for the renderer and `inputRef`.
    * @returns {React.ReactNode} The element to be rendered.
    */
-  renderHeaderFilter?: (params: GridHeaderFilterCellProps) => React.ReactNode;
+  renderHeaderFilter?: (params: GridRenderHeaderFilterProps) => React.ReactNode;
 }
 
 export interface GridControlledStateEventLookupExtra {
@@ -31,7 +28,7 @@ export interface GridControlledStateEventLookupExtra {
    * Fired when the pinned columns is changed.
    * @ignore - do not document.
    */
-  pinnedColumnsChange: { params: GridPinnedColumns };
+  pinnedColumnsChange: { params: GridPinnedColumnFields };
 }
 
 export interface GridEventLookupExtra {

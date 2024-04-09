@@ -10,7 +10,7 @@ import {
   getDataGridUtilityClass,
 } from '@mui/x-data-grid';
 import { gridEditRowsStateSelector, isEventTargetInPortal } from '@mui/x-data-grid/internals';
-import { DataGridExtraProcessedProps } from '../models/dataGridExtraProps';
+import type { DataGridExtraProcessedProps } from '../models/dataGridExtraProps';
 import { useGridRootProps } from '../hooks/utils/useGridRootProps';
 
 type OwnerState = {
@@ -53,9 +53,9 @@ function GridRowReorderCell(params: GridRenderCellParams) {
 
   const publish = React.useCallback(
     (
-        eventName: keyof GridRowEventLookup,
-        propHandler?: React.MouseEventHandler<HTMLDivElement> | undefined,
-      ): React.MouseEventHandler<HTMLDivElement> =>
+      eventName: keyof GridRowEventLookup,
+      propHandler?: React.MouseEventHandler<HTMLDivElement> | undefined,
+    ): React.MouseEventHandler<HTMLDivElement> =>
       (event) => {
         // Ignore portal
         if (isEventTargetInPortal(event)) {
