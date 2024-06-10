@@ -5,7 +5,7 @@ import {
   GridValidRowModel,
 } from '@mui/x-data-grid';
 
-export interface GridPinnedRowsProp<R extends GridValidRowModel = GridValidRowModel> {
+export interface GridPinnedRowsExtrap<R extends GridValidRowModel = GridValidRowModel> {
   top?: GridRowsProp<R>;
   bottom?: GridRowsProp<R>;
 }
@@ -13,9 +13,9 @@ export interface GridPinnedRowsProp<R extends GridValidRowModel = GridValidRowMo
 export interface GridRowPinningApi {
   /**
    * Changes the pinned rows.
-   * @param {GridPinnedRowsProp} pinnedRows An object containing the rows to pin.
+   * @param {GridPinnedRowsExtrap} pinnedRows An object containing the rows to pin.
    */
-  unstable_setPinnedRows: (pinnedRows?: GridPinnedRowsProp) => void;
+  unstable_setPinnedRows: (pinnedRows?: GridPinnedRowsExtrap) => void;
 }
 
 export interface GridRowPinningInternalCache {

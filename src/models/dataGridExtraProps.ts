@@ -16,8 +16,9 @@ import {
   DataGridPropsWithComplexDefaultValueBeforeProcessing,
   GridPinnedColumnFields,
   DataGridProSharedPropsWithDefaultValue,
+  DataGridProSharedPropsWithoutDefaultValue,
 } from '@mui/x-data-grid/internals';
-import type { GridPinnedRowsProp } from '../hooks/features/rowPinning';
+import type { GridPinnedRowsExtrap } from '../hooks/features/rowPinning';
 import { GridApiExtra } from './gridApiExtra';
 import {
   GridGroupingColDefOverride,
@@ -138,9 +139,10 @@ export interface DataGridExtraPropsWithDefaultValue<R extends GridValidRowModel 
 
 export interface DataGridExtraPropsWithoutDefaultValue<R extends GridValidRowModel = any>
   extends Omit<
-    DataGridPropsWithoutDefaultValue<R>,
-    'initialState' | 'componentsProps' | 'slotProps'
-  > {
+      DataGridPropsWithoutDefaultValue<R>,
+      'initialState' | 'componentsProps' | 'slotProps'
+    >,
+    DataGridProSharedPropsWithoutDefaultValue {
   /**
    * The ref object that allows grid manipulation. Can be instantiated with `useGridApiRef()`.
    */
@@ -226,7 +228,7 @@ export interface DataGridExtraPropsWithoutDefaultValue<R extends GridValidRowMod
   /**
    * Rows data to pin on top or bottom.
    */
-  pinnedRows?: GridPinnedRowsProp<R>;
+  pinnedRows?: GridPinnedRowsExtrap<R>;
   /**
    * Overridable components props dynamically passed to the component at rendering.
    */

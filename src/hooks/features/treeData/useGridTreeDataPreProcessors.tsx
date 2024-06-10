@@ -57,18 +57,18 @@ export const useGridTreeDataPreProcessors = (
   }, [privateApiRef, props.treeData]);
 
   const getGroupingColDef = React.useCallback(() => {
-    const groupingColDefProp = props.groupingColDef;
+    const groupingColDefExtrap = props.groupingColDef;
 
     let colDefOverride: GridGroupingColDefOverride | null | undefined;
-    if (typeof groupingColDefProp === 'function') {
+    if (typeof groupingColDefExtrap === 'function') {
       const params: GridGroupingColDefOverrideParams = {
         groupingName: TREE_DATA_STRATEGY,
         fields: [],
       };
 
-      colDefOverride = groupingColDefProp(params);
+      colDefOverride = groupingColDefExtrap(params);
     } else {
-      colDefOverride = groupingColDefProp;
+      colDefOverride = groupingColDefExtrap;
     }
 
     const { hideDescendantCount, ...colDefOverrideProperties } = colDefOverride ?? {};

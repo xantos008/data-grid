@@ -5,13 +5,13 @@ import { getRowIdFromRowModel, GridStateInitializer } from '@mui/x-data-grid/int
 import { GridPrivateApiExtra } from '../../../models/gridApiExtra';
 import { DataGridExtraProcessedProps, DataGridExtraProps } from '../../../models/dataGridExtraProps';
 import {
-  GridPinnedRowsProp,
+  GridPinnedRowsExtrap,
   GridRowPinningApi,
   GridRowPinningInternalCache,
 } from './gridRowPinningInterface';
 
 function createPinnedRowsInternalCache(
-  pinnedRows: GridPinnedRowsProp | undefined,
+  pinnedRows: GridPinnedRowsExtrap | undefined,
   getRowId: DataGridExtraProps['getRowId'],
 ) {
   const cache: GridRowPinningInternalCache = {

@@ -54,7 +54,7 @@ function cacheContentAndHeight(
     return {};
   }
 
-  // TODO change to lazy approach using a Proxy
+  // TODO change to lazy approach using a Extraxy
   // only call getDetailPanelContent when asked for an id
   const rowIds = gridDataRowIdsSelector(apiRef);
   const contentCache = rowIds.reduce<Record<GridRowId, ReturnType<typeof getDetailPanelContent>>>(
@@ -259,15 +259,15 @@ export const useGridDetailPanel = (
 
   useGridApiEventHandler(apiRef, 'sortedRowsSet', updateCachesAndForceUpdate);
 
-  const previousGetDetailPanelContentProp =
+  const previousGetDetailPanelContentExtrap =
     React.useRef<DataGridExtraProcessedProps['getDetailPanelContent']>();
-  const previousGetDetailPanelHeightProp =
+  const previousGetDetailPanelHeightExtrap =
     React.useRef<DataGridExtraProcessedProps['getDetailPanelHeight']>();
 
   const updateCachesIfNeeded = React.useCallback(() => {
     if (
-      props.getDetailPanelContent === previousGetDetailPanelContentProp.current &&
-      props.getDetailPanelHeight === previousGetDetailPanelHeightProp.current
+      props.getDetailPanelContent === previousGetDetailPanelContentExtrap.current &&
+      props.getDetailPanelHeight === previousGetDetailPanelHeightExtrap.current
     ) {
       return;
     }
@@ -288,8 +288,8 @@ export const useGridDetailPanel = (
     });
     apiRef.current.updateDimensions?.();
 
-    previousGetDetailPanelContentProp.current = props.getDetailPanelContent;
-    previousGetDetailPanelHeightProp.current = props.getDetailPanelHeight;
+    previousGetDetailPanelContentExtrap.current = props.getDetailPanelContent;
+    previousGetDetailPanelHeightExtrap.current = props.getDetailPanelHeight;
   }, [apiRef, props.getDetailPanelContent, props.getDetailPanelHeight]);
 
   const addDetailHeight = React.useCallback<GridPipeProcessor<'rowHeight'>>(

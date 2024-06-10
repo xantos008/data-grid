@@ -13,10 +13,10 @@ import {
   GridRowModel,
 } from '@mui/x-data-grid';
 import { GridPrivateApiExtra } from '../../../models/gridApiExtra';
-import { GridPinnedRowsProp } from './gridRowPinningInterface';
+import { GridPinnedRowsExtrap } from './gridRowPinningInterface';
 import { insertNodeInTree } from '../../../utils/tree/utils';
 
-type GridPinnedRowPosition = keyof GridPinnedRowsProp;
+type GridPinnedRowPosition = keyof GridPinnedRowsExtrap;
 
 export function addPinnedRow({
   groupingParams,

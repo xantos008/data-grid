@@ -23,6 +23,7 @@ export interface GridApiExtra
     GridColumnPinningApi,
     GridDetailPanelApi,
     GridRowPinningApi,
+    // APIs that are private in Community plan, but public in Extra and Premium plans
     GridRowMultiSelectionApi,
     GridColumnReorderApi {}
 

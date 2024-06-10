@@ -31,3 +31,4 @@ export {
 } from './components/reexports';
 
 export { GridColumnHeaders } from './components/GridColumnHeaders';
+export type { GridColumnHeadersProps } from './components/GridColumnHeaders';
