@@ -1,6 +1,6 @@
 {
   "name": "data-grid-extra",
-  "version": "4.6.3",
+  "version": "4.7.0",
   "description": "A react data table implementation using @mui.",
   "author": "xantos008",
   "files": [
@@ -40,7 +40,7 @@
     "build:simple": "npm run clean && rollup -c --bundleConfigAsCjs",
     "build": "npm run clean && rollup -c --bundleConfigAsCjs && npm run postbuild",
     "postbuild": "cp package.json dist && cp README.md dist && cp LICENSE dist && node ./scripts/runUpdatePackageJson.js",
-    "publish": "npm run compile && npm run build && npm run pack && npm publish data-grid-extra-4.6.3.tgz",
+    "publish": "npm run compile && npm run build && npm run pack && npm publish data-grid-extra-4.7.0.tgz",
     "pack": "npm pack ./build/"
   },
   "repository": {
@@ -48,11 +48,11 @@
     "url": "https://github.com/xantos008/data-grid-extra.git"
   },
   "dependencies": {
-    "@babel/runtime": "^7.24.6",
+    "@babel/runtime": "^7.24.7",
     "@emotion/styled": "^11.11.5",
     "@mui/utils": "^5.15.14",
     "@mui/system": "^5.15.15",
-    "@mui/x-data-grid": "7.6.2",
+    "@mui/x-data-grid": "7.7.0",
     "@types/format-util": "^1.0.4",
     "clsx": "^2.1.1",
     "prop-types": "^15.8.1",
@@ -65,8 +65,8 @@
     "react-dom": "^17.0.2 || ^18.0.0"
   },
   "devDependencies": {
-    "@babel/plugin-transform-runtime": "^7.24.6",
-    "@babel/traverse": "^7.24.6",
+    "@babel/plugin-transform-runtime": "^7.24.7",
+    "@babel/traverse": "^7.24.7",
     "@rollup/plugin-babel": "^6.0.4",
     "@rollup/plugin-commonjs": "^26.0.1",
     "@rollup/plugin-node-resolve": "^15.2.3",
@@ -79,6 +79,6 @@
   },
   "resolutions": {
     "csstype": "3.0.10",
-    "@babel/traverse": "^7.24.6"
+    "@babel/traverse": "^7.24.7"
   }
 }
